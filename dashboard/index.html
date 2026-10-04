@@ -16,8 +16,8 @@ html,body{margin:0;background:#313338;color:#fff;font-family:system-ui,sans-seri
     const r=await fetch('../dashboard-core.html?view=latest',{cache:'no-store'});
     if(!r.ok) throw new Error('Dashboard could not be loaded.');
     const html=await r.text();
-    const files=['dashboard-polish.js','discord-theme.js','dashboard-v4.js','dashboard-v4-patch.js','dashboard-enhance.js'];
-    const scripts=files.map(file=>`<script src="../${file}?v=20261005"><\/script>`).join('');
+    const files=['dashboard-polish.js','discord-theme.js','dashboard-v4.js','dashboard-v4-patch.js','dashboard-enhance.js','dashboard-header-menu.js'];
+    const scripts=files.map(file=>`<script src="../${file}?v=20261005-menu1"><\/script>`).join('');
     const polished=html.replace('</body>',scripts+'</body>');
     document.open();
     document.write(polished);
