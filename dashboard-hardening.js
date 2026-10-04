@@ -1,0 +1,109 @@
+(()=>{
+'use strict';
+
+/* OpenUtility Dashboard V5 hardening layer.
+ * This intentionally replaces the older enhancement/header-menu layers with one
+ * predictable controller. It does not own API calls or configuration state.
+ */
+const NS='ou-v5';
+if(window.__openutilityDashboardV5)return;
+window.__openutilityDashboardV5=true;
+
+const icon=(d)=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+const I={
+ menu:icon('M4 6h16M4 12h16M4 18h16'),close:icon('M6 6l12 12M18 6 6 18'),back:icon('M15 18 9 12l6-6'),
+ grid:icon('M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z'),
+ settings:icon('M9.7 3h4.6l.6 2.2 2 .9 2-1.1 3.2 3.2-1.1 2 .9 2 .6v4.6l-2.2.6-.9 2 1.1 2-3.2 3.2-2-1.1-2 .9-.6 2.2H9.7l-.6-2.2-2-.9-2 1.1-3.2-3.2 1.1-2-.9-2-2.2-.6v-4.6l2.2-.6.9-2-1.1-2 3.2-3.2 2 1.1 2-.9L9.7 3Zm2.3 5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z'),
+ shield:icon('M12 3 20 6v5c0 5.2-3.4 8.5-8 10-4.6-1.5-8-4.8-8-10V6l8-3Z'),
+ logs:icon('M6 4h12v16H6zM9 8h6M9 12h6M9 16h4'),
+ bolt:icon('M13 2 4 14h6l-1 8 9-12h-6l1-8Z'),
+ bot:icon('M12 3v3M8 9h8M6 10h12v9H6zM9 14h.01M15 14h.01M9 19v2M15 19v2M4 13h2M18 13h2'),
+ user:icon('M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0'),
+ crown:icon('m12 4 2.2 4 4.8-2 1 7H4l1-7 4.8 2L12 4Zm-6 13h12v3H6z'),
+ ai:icon('M8 4h8l3 3v10l-3 3H8l-3-3V7l3-3ZM9 12h.01M15 12h.01M9 16c2 1.2 4 1.2 6 0'),
+ logout:icon('M10 5H5v14h5M14 8l4 4-4 4M18 12H9')
+};
+
+function inject(){
+ if(document.getElementById(NS+'-style'))return;
+ const s=document.createElement('style');s.id=NS+'-style';s.textContent=`
+ .ou-v5-trigger{display:none}
+ .ou-v5-menu{display:none}
+ .ou-v5-icon{width:21px;height:21px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+ .ou-v5-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+ .ou-v5-health{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+ .ou-v5-health-card{background:#2b2d31;border-radius:6px;padding:13px;border:1px solid #3f4147}
+ .ou-v5-health-card b{display:block;font-size:12px}.ou-v5-health-card span{display:flex;align-items:center;gap:6px;color:#b5bac1;font-size:10px;margin-top:5px}
+ .ou-v5-dot{width:7px;height:7px;border-radius:50%;background:#23a559}.ou-v5-dot.warn{background:#f0b232}.ou-v5-dot.bad{background:#ed4245}
+ .ou-v5-error{position:fixed;left:14px;right:14px;bottom:18px;z-index:9999;background:#1e1f22;color:#f2f3f5;border:1px solid #ed424566;border-radius:6px;padding:12px 14px;box-shadow:0 12px 35px #0008;font-size:12px;display:none}
+ @media(max-width:650px){
+  body{padding-bottom:0!important;overflow-x:hidden}
+  .mobilebar{display:none!important}
+  .ou-v5-trigger{display:inline-flex!important;width:38px;height:38px;align-items:center;justify-content:center;flex:none;border:0;background:transparent;color:#b5bac1;border-radius:8px;cursor:pointer;padding:0;order:-1}
+  .ou-v5-trigger:hover{background:#313338;color:#fff}.ou-v5-trigger svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .ou-v5-menu{position:fixed;display:flex;flex-direction:column;inset:56px 0 0;background:#1e1f22;z-index:9000;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-100%);visibility:hidden;transition:transform .2s ease,visibility .2s ease;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+  .ou-v5-menu.open{transform:none;visibility:visible}
+  .ou-v5-top{display:flex;align-items:center;gap:10px;padding:16px 18px 14px}
+  .ou-v5-back{width:36px;height:36px;display:grid;place-items:center;border:0;background:transparent;color:#949ba4;border-radius:8px}.ou-v5-back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .ou-v5-brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800}.ou-v5-brand img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#313338}
+  .ou-v5-server{padding:0 18px 12px}.ou-v5-server select{width:100%;height:58px;border:0;border-radius:8px;background:#17181c;color:#f2f3f5;padding:0 13px;font-size:15px;font-weight:750;outline:0}
+  .ou-v5-list{padding:0 18px}.ou-v5-heading{padding:15px 8px 7px;color:#949ba4;font-size:10px;font-weight:850;letter-spacing:.9px;text-transform:uppercase}
+  .ou-v5-item{width:100%;min-height:52px;display:flex;align-items:center;gap:15px;border:0;background:transparent;color:#b5bac1;border-radius:8px;padding:0 10px;text-align:left;font-size:15px;font-weight:650;cursor:pointer}.ou-v5-item:hover{background:#313338;color:#fff}.ou-v5-item.active{background:#35373c;color:#fff}.ou-v5-item .ou-v5-text{flex:1}.ou-v5-badge{background:#4752c4;color:#fff;border-radius:999px;padding:4px 8px;font-size:9px;font-weight:850}
+  .ou-v5-promo{margin:14px 18px 0;padding:16px;border-radius:8px;background:linear-gradient(135deg,#5865f2,#3c45a8)}.ou-v5-promo b{display:block;font-size:14px}.ou-v5-promo span{display:block;color:#e3e5e8;font-size:11px;line-height:1.5;margin-top:4px}.ou-v5-promo button{margin-top:11px;border:0;background:#fff;color:#232428;border-radius:4px;padding:8px 11px;font-size:10px;font-weight:800}
+  .ou-v5-account{margin-top:auto;padding:14px 18px 0}.ou-v5-account button{width:100%;display:flex;align-items:center;gap:12px;border:0;background:transparent;color:#ed777f;min-height:48px;padding:0 10px;border-radius:8px;text-align:left;font-size:14px;font-weight:650}
+  .ou-v5-health{grid-template-columns:1fr 1fr}.ou-v5-health-card{padding:11px}.ou-v5-health-card:last-child{grid-column:1/-1}
+ }
+ `;document.head.appendChild(s);
+}
+
+function removeLegacy(){
+ ['ouHeaderMenu','ouMenuTrigger','ouDashboardSearch'].forEach(id=>document.getElementById(id)?.remove());
+ document.querySelectorAll('.ou-menu-trigger,.ou-mobile-nav').forEach(e=>e.remove());
+ document.querySelectorAll('.ou-hero,.ou-grid,.ou-section-note').forEach(e=>e.remove());
+}
+function tab(id){
+ const b=document.querySelector(`[data-tab="${CSS.escape(id)}"]`);if(b){b.click();return true}
+ if(typeof window.tab==='function'){window.tab(id);return true}return false;
+}
+function build(){
+ const nav=document.querySelector('.navin');if(!nav)return;
+ removeLegacy();
+ const trigger=document.createElement('button');trigger.id='ouV5Trigger';trigger.className='ou-v5-trigger';trigger.type='button';trigger.setAttribute('aria-label','Open dashboard menu');trigger.setAttribute('aria-expanded','false');trigger.innerHTML=I.menu;nav.prepend(trigger);
+ const menu=document.createElement('aside');menu.id='ouV5Menu';menu.className='ou-v5-menu';
+ const item=(id,label,svg,badge='')=>`<button type="button" class="ou-v5-item" data-v5-tab="${id}"><span class="ou-v5-icon">${svg}</span><span class="ou-v5-text">${label}</span>${badge?`<span class="ou-v5-badge">${badge}</span>`:''}</button>`;
+ menu.innerHTML=`<div class="ou-v5-top"><button class="ou-v5-back" type="button" aria-label="Close menu">${I.back}</button><div class="ou-v5-brand"><img src="./assets/openutility-bot-logo.jpg" alt="OpenUtility"><span>OpenUtility</span></div></div>
+ <div class="ou-v5-server"><select id="ouV5Server" aria-label="Select server"><option>Loading servers…</option></select></div>
+ <div class="ou-v5-list"><div class="ou-v5-heading">Dashboard</div>${item('overview','Dashboard',I.grid)}${item('configuration','Configuration',I.settings)}${item('moderation','Moderation',I.shield)}${item('logging','Advanced Logging',I.logs)}${item('embeds','Embed Builder',I.bolt)}
+ <div class="ou-v5-heading">OpenUtility</div>${item('security','Security Center',I.shield)}${item('welcome','Welcome Studio',I.user)}${item('configuration','AutoMod',I.bot,'NEW')}
+ <div class="ou-v5-heading">More</div>${item('configuration','Bot Personalizer',I.user)}${item('configuration','Premium',I.crown)}${item('overview','OpenUtility AI',I.ai)}</div>
+ <div class="ou-v5-promo"><b>✨ OpenUtility Control Center</b><span>Security, moderation, automation and server configuration in one place.</span><button type="button" id="ouV5Invite">Add OpenUtility to a server</button></div>
+ <div class="ou-v5-account"><button type="button" id="ouV5Logout">${I.logout}<span>Log out</span></button></div>`;
+ document.body.appendChild(menu);
+
+ const source=document.getElementById('serverSelect'), target=menu.querySelector('#ouV5Server');
+ const sync=()=>{if(!source||!target)return;target.innerHTML=source.innerHTML;target.value=source.value};sync();
+ if(source){source.addEventListener('change',sync);target.addEventListener('change',()=>{source.value=target.value;source.dispatchEvent(new Event('change',{bubbles:true}))})}
+ const open=()=>{menu.classList.add('open');trigger.classList.add('open');trigger.setAttribute('aria-expanded','true');trigger.innerHTML=I.close;document.body.style.overflow='hidden';sync();markActive()};
+ const close=()=>{menu.classList.remove('open');trigger.classList.remove('open');trigger.setAttribute('aria-expanded','false');trigger.innerHTML=I.menu;document.body.style.overflow=''};
+ const markActive=()=>{const active=document.querySelector('.section.active')?.id||'overview';menu.querySelectorAll('[data-v5-tab]').forEach(b=>b.classList.toggle('active',b.dataset.v5Tab===active))};
+ trigger.addEventListener('click',()=>menu.classList.contains('open')?close():open());menu.querySelector('.ou-v5-back').addEventListener('click',close);
+ menu.querySelectorAll('[data-v5-tab]').forEach(b=>b.addEventListener('click',()=>{tab(b.dataset.v5Tab);close();setTimeout(markActive,30)}));
+ menu.querySelector('#ouV5Logout').addEventListener('click',()=>{if(typeof window.logout==='function')window.logout();else location.href='../'});
+ menu.querySelector('#ouV5Invite').addEventListener('click',()=>window.open('https://discord.com/oauth2/authorize?client_id=1553118626964570112&permissions=8&integration_type=0&scope=bot','_blank','noopener'));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.classList.contains('open'))close()});
+ window.addEventListener('resize',()=>{if(innerWidth>650)close()});
+ new MutationObserver(markActive).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+ markActive();
+}
+function addHealth(){
+ const overview=document.getElementById('overview');if(!overview||overview.querySelector('.ou-v5-health'))return;
+ const wrap=document.createElement('div');wrap.className='ou-v5-health';wrap.innerHTML=`<div class="ou-v5-health-card"><b>Bot status</b><span><i class="ou-v5-dot"></i> Online</span></div><div class="ou-v5-health-card"><b>Protection</b><span><i class="ou-v5-dot"></i> Active</span></div><div class="ou-v5-health-card"><b>Dashboard API</b><span><i class="ou-v5-dot"></i> Connected</span></div>`;
+ const h=overview.querySelector('h1');if(h)h.after(wrap);
+}
+function start(){
+ inject();removeLegacy();build();addHealth();
+ // Prevent harmless third-party/UI errors from breaking navigation. Never hide app errors.
+ window.addEventListener('error',e=>{if(/ResizeObserver loop/.test(e.message||''))e.preventDefault()});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
