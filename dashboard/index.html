@@ -13,11 +13,11 @@ html,body{margin:0;background:#1e1f22;color:#f2f3f5;font-family:system-ui,-apple
 <script>
 (async()=>{
   try{
-    const r=await fetch('../dashboard-core.html?v=20261005-v5',{cache:'no-store'});
+    const r=await fetch('../dashboard-core.html?v=20261005-release',{cache:'no-store'});
     if(!r.ok) throw new Error('Dashboard could not be loaded.');
     const html=await r.text();
     document.open();
-    document.write(html.replace('</body>',`<script src="../discord-theme.js?v=20261005-v5"><\/script><script src="../dashboard-v4.js?v=20261005-v5"><\/script><script src="../dashboard-v4-patch.js?v=20261005-v5"><\/script><script src="../dashboard-hardening.js?v=20261005-v5"><\/script></body>`));
+    document.write(html.replace('</body>',`<script src="../discord-theme.js?v=20261005-release"><\/script><script src="../dashboard-hardening.js?v=20261005-release"><\/script></body>`));
     document.close();
   }catch(e){
     document.getElementById('loader').outerHTML='<div class="err"><h2>Dashboard unavailable</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><button onclick="location.reload()">Try again</button></div>';
