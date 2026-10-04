@@ -13,11 +13,15 @@ html,body{margin:0;background:#1e1f22;color:#f2f3f5;font-family:system-ui,-apple
 <script>
 (async()=>{
   try{
-    const r=await fetch('../dashboard-core.html?v=20261005-release',{cache:'no-store'});
+    const r=await fetch('../dashboard-core.html?v=20261005-reliability',{cache:'no-store'});
     if(!r.ok) throw new Error('Dashboard could not be loaded.');
-    const html=await r.text();
+    let html=await r.text();
+    html=html.replaceAll('./assets/openutility-bot-logo.jpg','../assets/openutility-bot-logo.jpg');
+    html=html.replace("}catch(e){location.href='./?auth=required'}","}catch(e){window.__openutilityBootError?window.__openutilityBootError(e):location.href='./?auth=required'}");
+    html=html.replace('</head>',`<script>window.__openutilityBootError=${function(e){const m=String(e?.message||e||'The dashboard could not start.').replace(/[<>]/g,'');document.body.innerHTML='<div style="min-height:100vh;display:grid;place-items:center;padding:24px;background:#060910;color:#f2f3f5;font-family:system-ui"><div style="max-width:480px;background:#0b111b;border:1px solid #1d2939;border-radius:18px;padding:28px"><h2>Dashboard unavailable</h2><p style="color:#8996a8">'+m+'</p><button onclick="location.reload()" style="background:#5865f2;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:700">Try again</button></div></div>';}}</script></head>`);
+    html=html.replace('</body>',`<script src="../dashboard-reliability.js?v=20261005-1"><\/script><script src="../discord-theme.js?v=20261005-reliability"><\/script><script src="../dashboard-hardening.js?v=20261005-reliability"><\/script></body>`);
     document.open();
-    document.write(html.replace('</body>',`<script src="../discord-theme.js?v=20261005-release"><\/script><script src="../dashboard-hardening.js?v=20261005-release"><\/script></body>`));
+    document.write(html);
     document.close();
   }catch(e){
     document.getElementById('loader').outerHTML='<div class="err"><h2>Dashboard unavailable</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><button onclick="location.reload()">Try again</button></div>';
