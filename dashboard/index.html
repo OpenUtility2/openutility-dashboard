@@ -15,19 +15,23 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#060910;col
 </style>
 </head>
 <body>
-<iframe id="dashboard-frame" title="OpenUtility Discord Dashboard" src="/dashboard-core.html" allow="clipboard-read; clipboard-write"></iframe>
+<iframe id="dashboard-frame" title="OpenUtility Discord Dashboard" allow="clipboard-read; clipboard-write"></iframe>
 <div id="fallback" hidden>
   <section class="box">
     <h2>Dashboard unavailable</h2>
     <p>The dashboard could not be displayed. Reload it or open the dashboard directly.</p>
     <button type="button" onclick="location.reload()">Try again</button>
-    <a href="/dashboard-core.html">Open dashboard</a>
+    <a id="direct-link" href="/dashboard-core.html">Open dashboard</a>
   </section>
 </div>
 <script>
 (function(){
   const frame=document.getElementById('dashboard-frame');
   const fallback=document.getElementById('fallback');
+  const query=window.location.search||'';
+  const core='/dashboard-core.html'+query;
+  frame.src=core;
+  document.getElementById('direct-link').href=core;
   let loaded=false;
   const timer=setTimeout(function(){if(!loaded)fallback.hidden=false},15000);
   frame.addEventListener('load',function(){loaded=true;clearTimeout(timer);fallback.hidden=true;try{document.title=frame.contentDocument.title||'OpenUtility Bot — Discord Dashboard'}catch(e){}});
