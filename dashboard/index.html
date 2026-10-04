@@ -2,27 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>OpenUtility Bot — Discord Dashboard</title>
 <style>
-html,body{margin:0;background:#313338;color:#fff;font-family:system-ui,sans-serif}body{min-height:100vh;display:grid;place-items:center}.loader{text-align:center;color:#b5bac1}.spin{width:30px;height:30px;border:3px solid #ffffff18;border-top-color:#5865f2;border-radius:50%;animation:s .8s linear infinite;margin:0 auto 12px}@keyframes s{to{transform:rotate(360deg)}}.err{max-width:440px;padding:24px;text-align:center}.err button{background:#5865f2;color:#fff;border:0;border-radius:4px;padding:10px 15px}
+html,body{margin:0;background:#1e1f22;color:#f2f3f5;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{min-height:100vh}.loader{min-height:100vh;display:grid;place-items:center;text-align:center;color:#b5bac1}.spin{width:30px;height:30px;border:3px solid #ffffff18;border-top-color:#5865f2;border-radius:50%;animation:s .8s linear infinite;margin:0 auto 12px}@keyframes s{to{transform:rotate(360deg)}}.err{max-width:460px;margin:20vh auto;padding:24px;text-align:center}.err button{background:#5865f2;color:#fff;border:0;border-radius:4px;padding:10px 15px;font-weight:700}
 </style>
 </head>
 <body>
-<div class="loader"><div class="spin"></div>Loading OpenUtility Discord Dashboard…</div>
+<div class="loader" id="loader"><div><div class="spin"></div>Loading OpenUtility Discord Dashboard…</div></div>
 <script>
 (async()=>{
   try{
-    const r=await fetch('../dashboard-core.html?view=latest',{cache:'no-store'});
+    const r=await fetch('../dashboard-core.html?v=20261005-v5',{cache:'no-store'});
     if(!r.ok) throw new Error('Dashboard could not be loaded.');
     const html=await r.text();
-    const files=['dashboard-polish.js','discord-theme.js','dashboard-v4.js','dashboard-v4-patch.js','dashboard-enhance.js','dashboard-header-menu.js'];
-    const scripts=files.map(file=>`<script src="../${file}?v=20261005-menu1"><\/script>`).join('');
-    const polished=html.replace('</body>',scripts+'</body>');
     document.open();
-    document.write(polished);
+    document.write(html.replace('</body>',`<script src="../discord-theme.js?v=20261005-v5"><\/script><script src="../dashboard-v4.js?v=20261005-v5"><\/script><script src="../dashboard-v4-patch.js?v=20261005-v5"><\/script><script src="../dashboard-hardening.js?v=20261005-v5"><\/script></body>`));
     document.close();
-  }catch(e){document.body.innerHTML='<div class="err"><h2>Dashboard unavailable</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><button onclick="location.reload()">Try again</button></div>';}
+  }catch(e){
+    document.getElementById('loader').outerHTML='<div class="err"><h2>Dashboard unavailable</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><button onclick="location.reload()">Try again</button></div>';
+  }
 })();
 </script>
 </body>
