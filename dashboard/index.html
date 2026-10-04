@@ -1,40 +1,53 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta http-equiv="Cache-Control" content="no-store">
-  <title>OpenUtility Bot — Discord Dashboard</title>
-  <style>
-    :root{color-scheme:dark}html,body{margin:0;min-height:100%;background:#1e1f22;color:#f2f3f5;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{min-height:100vh;display:grid;place-items:center}.boot{display:grid;place-items:center;text-align:center;gap:12px;color:#b5bac1}.spin{width:28px;height:28px;border:3px solid #ffffff18;border-top-color:#5865f2;border-radius:50%;animation:spin .75s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.fallback{display:none;max-width:520px;margin:24px;padding:24px;background:#111318;border:1px solid #303238;border-radius:16px}.fallback h2{margin:0 0 8px}.fallback p{color:#b5bac1;line-height:1.5}.fallback a{display:inline-block;background:#5865f2;color:#fff;text-decoration:none;border-radius:8px;padding:10px 14px;font-weight:700}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OpenUtility Bot — Discord Dashboard</title>
+<link rel="icon" href="/assets/openutility-bot-logo.jpg" type="image/jpeg">
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#1e1f22;color:#f2f3f5;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#dashboard-frame{display:block;width:100%;height:100%;border:0;background:#1e1f22}
+#fallback{position:fixed;inset:0;display:grid;place-items:center;padding:24px;box-sizing:border-box;background:#1e1f22;z-index:2}
+#fallback[hidden]{display:none}.box{width:min(520px,100%);padding:24px;box-sizing:border-box;background:#111318;border:1px solid #303238;border-radius:16px;box-shadow:0 20px 70px #0008}.box h2{margin:0 0 8px}.box p{color:#b5bac1;line-height:1.5}.box button{background:#5865f2;color:#fff;border:0;border-radius:7px;padding:10px 15px;font-weight:700}.box a{display:inline-block;margin-left:8px;color:#c9cdfb;text-decoration:none}
+</style>
 </head>
 <body>
-  <main class="boot" id="boot"><div class="spin"></div><div>Opening OpenUtility Discord Dashboard…</div></main>
-  <main class="fallback" id="fallback">
-    <h2>Dashboard couldn't open</h2>
-    <p>The dashboard entry point failed to redirect. Open the dashboard directly below.</p>
-    <a id="direct" href="/dashboard-core.html">Open Dashboard</a>
-  </main>
-  <script>
-    (function(){
-      var target='/dashboard-core.html'+window.location.search+window.location.hash;
-      var direct=document.getElementById('direct');
-      direct.href=target;
-      // Do not fetch, document.write, iframe, or dynamically rebuild the dashboard here.
-      // The previous bootstrap did that and could leave mobile browsers stuck forever.
-      try { window.location.replace(target); }
-      catch(e) {
-        document.getElementById('boot').style.display='none';
-        document.getElementById('fallback').style.display='block';
-      }
-      window.setTimeout(function(){
-        if(document.visibilityState==='visible' && location.pathname==='/dashboard/'){
-          document.getElementById('boot').style.display='none';
-          document.getElementById('fallback').style.display='block';
-        }
-      },3000);
-    })();
-  </script>
+<iframe id="dashboard-frame" title="OpenUtility Discord Dashboard" allow="clipboard-read; clipboard-write"></iframe>
+<div id="fallback" hidden><section class="box"><h2>Dashboard unavailable</h2><p id="errorText">The dashboard could not be loaded.</p><button type="button" onclick="location.reload()">Try again</button><a href="/">OpenUtility home</a></section></div>
+<script>
+(function(){
+  'use strict';
+  const frame=document.getElementById('dashboard-frame');
+  const fallback=document.getElementById('fallback');
+  const errorText=document.getElementById('errorText');
+  const query=window.location.search||'';
+  let settled=false;
+  const showError=(message)=>{if(settled)return;settled=true;errorText.textContent=message;fallback.hidden=false;};
+  const inject=(doc,src)=>new Promise((resolve,reject)=>{
+    if(doc.querySelector('script[data-ou-shell="'+src+'"]'))return resolve();
+    const s=doc.createElement('script');s.src=src;s.async=false;s.dataset.ouShell=src;
+    s.onload=resolve;s.onerror=()=>reject(new Error('Failed to load '+src));doc.body.appendChild(s);
+  });
+  const enhance=async()=>{
+    try{
+      const doc=frame.contentDocument;
+      if(!doc||!doc.body)throw new Error('Dashboard document is unavailable.');
+      await inject(doc,'/dashboard-reliability.js?v=20261005-4');
+      await inject(doc,'/discord-theme.js?v=20261005-4');
+      await inject(doc,'/dashboard-hardening.js?v=20261005-4');
+      await inject(doc,'/dashboard-enhance.js?v=20261005-4');
+      const style=doc.createElement('style');
+      style.textContent='@media(max-width:650px){body{padding-bottom:18px!important}.mobilebar{display:none!important}}';
+      doc.head.appendChild(style);
+      settled=true;
+    }catch(e){showError(e&&e.message?e.message:'The dashboard loaded but could not initialize its interface.');}
+  };
+  frame.addEventListener('load',enhance);
+  frame.addEventListener('error',()=>showError('The dashboard core could not be loaded.'));
+  setTimeout(()=>{if(!settled&&frame.contentDocument&&frame.contentDocument.body)enhance();else if(!settled)showError('The dashboard took too long to load.');},12000);
+  frame.src='/dashboard-core.html'+query;
+})();
+</script>
 </body>
 </html>
