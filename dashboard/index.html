@@ -4,38 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>OpenUtility Bot — Discord Dashboard</title>
-<link rel="icon" href="/assets/openutility-bot-logo.jpg" type="image/jpeg">
 <style>
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#060910;color:#f2f3f5;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-#dashboard-frame{display:block;width:100%;height:100%;border:0;background:#060910}
-#fallback{position:fixed;inset:0;display:grid;place-items:center;padding:24px;box-sizing:border-box;background:#060910;z-index:2}
-#fallback[hidden]{display:none}
-.box{width:min(520px,100%);padding:24px;box-sizing:border-box;background:#0b111b;border:1px solid #1d2939;border-radius:18px;box-shadow:0 20px 80px #0008}
-.box h2{margin:0 0 8px;color:#f5f7fb}.box p{margin:0 0 18px;color:#8996a8;line-height:1.55}.box button{border:0;border-radius:10px;background:#5865f2;color:#fff;padding:11px 15px;font-weight:750}.box a{display:inline-flex;margin-left:8px;color:#cbd4e0;text-decoration:none}
+html,body{margin:0;min-height:100%;background:#1e1f22;color:#f2f3f5;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{min-height:100vh}.loader{min-height:100vh;display:grid;place-items:center;text-align:center;color:#b5bac1}.spin{width:30px;height:30px;border:3px solid #ffffff18;border-top-color:#5865f2;border-radius:50%;animation:s .8s linear infinite;margin:0 auto 12px}@keyframes s{to{transform:rotate(360deg)}}.err{min-height:100vh;display:grid;place-items:center;padding:24px;box-sizing:border-box}.errbox{width:min(520px,100%);background:#111318;border:1px solid #303238;border-radius:16px;padding:24px;box-sizing:border-box;box-shadow:0 20px 70px #0008}.errbox h2{margin:0 0 8px}.errbox p{color:#b5bac1;line-height:1.5}.errbox button{background:#5865f2;color:#fff;border:0;border-radius:6px;padding:10px 15px;font-weight:700}.errbox a{display:inline-block;margin-left:8px;color:#c9cdfb;text-decoration:none}
 </style>
 </head>
 <body>
-<iframe id="dashboard-frame" title="OpenUtility Discord Dashboard" allow="clipboard-read; clipboard-write"></iframe>
-<div id="fallback" hidden>
-  <section class="box">
-    <h2>Dashboard unavailable</h2>
-    <p>The dashboard could not be displayed. Reload it or open the dashboard directly.</p>
-    <button type="button" onclick="location.reload()">Try again</button>
-    <a id="direct-link" href="/dashboard-core.html">Open dashboard</a>
-  </section>
-</div>
+<div class="loader" id="loader"><div><div class="spin"></div><div id="loadingText">Loading OpenUtility Discord Dashboard…</div></div></div>
 <script>
-(function(){
-  const frame=document.getElementById('dashboard-frame');
-  const fallback=document.getElementById('fallback');
-  const query=window.location.search||'';
-  const core='/dashboard-core.html'+query;
-  frame.src=core;
-  document.getElementById('direct-link').href=core;
-  let loaded=false;
-  const timer=setTimeout(function(){if(!loaded)fallback.hidden=false},15000);
-  frame.addEventListener('load',function(){loaded=true;clearTimeout(timer);fallback.hidden=true;try{document.title=frame.contentDocument.title||'OpenUtility Bot — Discord Dashboard'}catch(e){}});
-  frame.addEventListener('error',function(){clearTimeout(timer);fallback.hidden=false});
+(async()=>{
+  const CORE='/dashboard-core.html?v=20261005-2';
+  const timeoutMs=12000;
+  const loadingText=document.getElementById('loadingText');
+  const escapeHtml=value=>String(value).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));
+  const fail=(message,showRetry=true)=>{document.body.innerHTML='<main class="err"><section class="errbox"><h2>Dashboard unavailable</h2><p>'+escapeHtml(message)+'</p>'+(showRetry?'<button onclick="location.reload()">Try again</button>':'')+'<a href="/">OpenUtility home</a></section></main>';};
+  try{
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),timeoutMs);
+    loadingText.textContent='Connecting to OpenUtility…';
+    const response=await fetch(CORE,{cache:'no-store',credentials:'same-origin',signal:controller.signal});
+    clearTimeout(timer);
+    if(!response.ok) throw new Error('Dashboard core returned HTTP '+response.status+'.');
+    let html=await response.text();
+    if(!html.trim()) throw new Error('Dashboard core returned an empty response.');
+    html=html.replaceAll('./assets/openutility-bot-logo.jpg','../assets/openutility-bot-logo.jpg');
+    html=html.replace('</head>',`<script>window.__openutilityBootError=function(e){var m=String(e&&e.message||e||'The dashboard could not start.').replace(/[<>]/g,'');document.body.innerHTML='<main style="min-height:100vh;display:grid;place-items:center;padding:24px;background:#060910;color:#f2f3f5;font-family:system-ui"><section style="max-width:520px;background:#0b111b;border:1px solid #1d2939;border-radius:18px;padding:28px"><h2>Dashboard unavailable</h2><p style="color:#8996a8">'+m+'</p><button onclick="location.reload()" style="background:#5865f2;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:700">Try again</button></section></main>';};</script></head>`);
+    html=html.replace('</body>',`<script src="/dashboard-reliability.js?v=20261005-2"><\/script><script src="/discord-theme.js?v=20261005-2"><\/script><script src="/dashboard-hardening.js?v=20261005-2"><\/script></body>`);
+    document.open();document.write(html);document.close();
+  }catch(error){
+    const message=error&&error.name==='AbortError'?'The dashboard took too long to load. Please check your connection and try again.':(error&&error.message||'The dashboard could not be loaded.');
+    fail(message);
+  }
 })();
 </script>
 </body>
