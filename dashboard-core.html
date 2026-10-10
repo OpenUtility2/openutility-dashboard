@@ -196,7 +196,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 <section id="welcome" class="section"><h1>Welcome Message Designer</h1><div class="safety-bar" id="safety-welcome" hidden><span>Unsaved welcome changes</span><div class="safety-actions"><button class="btn" type="button" onclick="discardSection('welcome')">Discard</button><button class="btn primary" type="button" onclick="saveWelcomeDesigner()">Save now</button></div></div><p class="sub">Compose the first message members see. Preview placeholders before saving the welcome configuration.</p><div class="panel"><div class="formgrid"><div class="field"><label for="welcomeDesignerChannel">Welcome channel</label><select id="welcomeDesignerChannel" class="input"></select></div><div class="field"><label class="check"><input id="welcomeDesignerEnabled" type="checkbox"> Enable welcome messages</label><label class="check"><input id="welcomeDmEnabled" type="checkbox"> Enable welcome DM (if supported by bot)</label></div></div><div class="field"><label for="welcomeDesignerMessage">Welcome message</label><textarea id="welcomeDesignerMessage" class="textarea" maxlength="2000" placeholder="Welcome {user} to {server}!"></textarea><p class="field-help">Available preview examples: {user}, {server}. Preview only replaces these known placeholders; the bot’s runtime support determines actual substitutions.</p></div><div class="field"><label for="welcomeDesignerTitle">Embed title (optional)</label><input id="welcomeDesignerTitle" class="input" maxlength="256" placeholder="Welcome!"></div><div class="field"><label for="welcomeDesignerColor">Accent color</label><input id="welcomeDesignerColor" class="input" type="color" value="#829CFF"></div><div class="panel"><h2>Live preview</h2><div id="welcomePreview" class="welcome-preview">Welcome Member to Your Server!</div></div><div class="savebar"><span id="welcomeStatus" class="status" role="status" aria-live="polite"></span><button id="welcomeSaveButton" class="btn primary" type="button" onclick="saveWelcomeDesigner()">Save welcome settings</button></div></div></section><section id="history" class="section"><h1>Admin Safety & Change History</h1><p class="sub">Review recent configuration changes recorded through the dashboard. This is not a replacement for Discord’s audit log.</p><div class="panel"><div class="panelhead"><div><h2>Recent changes</h2><p id="auditSummary">Up to 100 recent dashboard save events.</p></div><button class="btn" type="button" id="refreshAudit">Refresh history</button></div><div id="auditList" class="audit-list"><div class="empty">Select a server to load change history.</div></div></div><div class="panel"><h2>Safety notes</h2><p>Configuration writes are read back where supported. Unsaved edits trigger a discard confirmation. Change-history entries identify the actor and section, but do not store secret values or full message contents.</p></div></section></section></main><nav class="mobilebar"><button class="active" data-mobile="overview"><i>⌂</i>Overview</button><button data-mobile="configuration"><i>⚙</i>Config</button><button data-mobile="moderation"><i>🛡</i>Moderate</button><button data-mobile="automod"><i>⌁</i>AutoMod</button><button data-mobile="logging"><i>▣</i>Logs</button><button data-mobile="embeds"><i>✦</i>Embeds</button><button data-mobile="welcome"><i>✉</i>Welcome</button><button data-mobile="history"><i>↺</i>History</button></nav><div class="toast" id="toast"></div>
 <script src="./api-config.js"></script>
 <script>
-const API=window.OPENUTILITY_API_BASE||'https://openutility-bot-backend.vercel.app/api';let servers=[],guild=null,channels=[],savedEmbeds=[],configSaveInFlight=false,loggingSaveInFlight=false;const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>\'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const API=window.OPENUTILITY_API_BASE||'https://openutility-bot-backend.vercel.app/api';let servers=[],guild=null,channels=[],channelsGuildId=null,savedEmbeds=[],configSaveInFlight=false,loggingSaveInFlight=false;const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>\'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 let csrfToken=null;let activityItems=[];let analyticsCases=[];let auditItems=[];let moderationCases=[];let activeActivityGuild=null;let dirtySections=new Set();let sectionSnapshots={};let bypassDirtyGuard=false;async function getCsrfToken(){if(csrfToken)return csrfToken;const r=await fetch(API+'/csrf',{credentials:'include',headers:{Accept:'application/json'}});let d={};try{d=await r.json()}catch{}if(!r.ok||!d.token)throw new Error(d.error||'Your session expired. Please sign in again.');csrfToken=d.token;return csrfToken}async function api(path,opts={}){
   const method=String(opts.method||"GET").toUpperCase();
   const makeHeaders=async()=>{const headers={Accept:"application/json",...(opts.body?{"Content-Type":"application/json"}:{}),...(opts.headers||{})};if(!["GET","HEAD","OPTIONS"].includes(method))headers["X-CSRF-Token"]=await getCsrfToken();return headers};
@@ -239,12 +239,13 @@ async function loadChannels(){
   try{
     const data=await api("/guilds/"+guildId+"/channels");
     if(!guild||guild.id!==guildId)return;
-    channels=Array.isArray(data.channels)?data.channels:[];
+    channels=Array.isArray(data.channels)?data.channels:[];channelsGuildId=guildId;
     ["welcomeChannel","welcomeDesignerChannel","messageChannel","memberChannel","moderationChannel","commandChannel","embedChannel"].forEach(id=>{if($(id))$(id).innerHTML=channelOptions($(id).value)});
     return true;
   }catch(error){
     if(guild?.id!==guildId)return;
-    channels=[];
+    channels=[];channelsGuildId=null;
+    ["welcomeChannel","welcomeDesignerChannel","messageChannel","memberChannel","moderationChannel","commandChannel","embedChannel"].forEach(id=>{if($(id))$(id).innerHTML=channelOptions("")});
     const message="Could not load this server's channels: "+(error.message||"API request failed");
     ["configStatus","logStatus","welcomeStatus","embedStatus"].forEach(id=>{if($(id))$(id).textContent=message});
     return false;
@@ -290,6 +291,7 @@ async function saveConfig(){
   if(words.length>100||words.some(word=>word.length>100)){status.textContent="Use at most 100 blocked words, each no longer than 100 characters.";return toast(status.textContent)}
   configSaveInFlight=true;buttons.forEach(button=>button.disabled=true);status.textContent="Saving settings…";
   try{
+    if(channelsGuildId!==guildId){status.textContent="Channel list unavailable. Reload this section before saving to avoid clearing channel settings.";return toast(status.textContent)}
     const body={prefix,commands:{slash:$("slash").checked,prefix:$("prefixEnabled").checked},welcome:{enabled:$("welcomeEnabled").checked,channelId:$("welcomeChannel").value||null,message:$("welcomeMessage").value},automod:{enabled:$("automodEnabled").checked,antiSpam:$("antiSpam").checked,antiLinks:$("antiLinks").checked,blockedWords:words},moderation:{enabled:$("modEnabled").checked,warnings:$("warnings").checked,timeoutMinutes:timeout}};
     const saved=await api("/guilds/"+guildId+"/config",{method:"PUT",body:JSON.stringify(body)});
     if(saved.guildId&&saved.guildId!==guildId)throw new Error("The API saved settings for an unexpected server.");
@@ -328,6 +330,7 @@ async function saveWelcomeDesigner(){
  if(!guild?.botInstalled)return toast("Install OpenUtility first");
  const guildId=guild.id,button=$("welcomeSaveButton");if(button.disabled)return;button.disabled=true;$("welcomeStatus").textContent="Saving and verifying…";
  try{
+  if(channelsGuildId!==guildId)throw new Error("Channel list unavailable. Reload this section before saving to avoid clearing the welcome channel.");
   const message=$("welcomeDesignerMessage").value,title=$("welcomeDesignerTitle").value,color=$("welcomeDesignerColor").value;
   if(message.length>2000||title.length>256)throw new Error("Welcome message must be 2,000 characters or fewer and title 256 or fewer.");
   if(!/^#[0-9a-f]{6}$/i.test(color))throw new Error("Choose a valid six-digit accent color.");
@@ -361,6 +364,7 @@ async function saveLogging(){
   if(loggingSaveInFlight)return;
   loggingSaveInFlight=true;const guildId=guild.id,status=$("logStatus"),button=document.querySelector('#logging button[onclick*="saveLogging"]');if(button)button.disabled=true;status.textContent="Saving logging settings…";
   try{
+    if(channelsGuildId!==guildId)throw new Error("Channel list unavailable. Reload this section before saving to avoid clearing channel settings.");
     const body={enabled:$("logEnabled").checked,messageLogs:$("messageLogs").checked,memberLogs:$("memberLogs").checked,moderationLogs:$("moderationLogs").checked,commandLogs:$("commandLogs").checked,messageChannelId:$("messageChannel").value||null,memberChannelId:$("memberChannel").value||null,moderationChannelId:$("moderationChannel").value||null,commandChannelId:$("commandChannel").value||null};
     const saved=await api("/guilds/"+guildId+"/logging",{method:"PUT",body:JSON.stringify(body)});
     if(saved.guildId&&saved.guildId!==guildId)throw new Error("The API saved logging settings for an unexpected server.");
