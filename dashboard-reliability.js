@@ -2,8 +2,8 @@
 'use strict';
 if(window.__openutilityReliability)return;
 window.__openutilityReliability=true;
-const API_ORIGIN='https://openutility-bot-backend.vercel.app/api';
-const LOGIN_URL='https://openutility-bot-backend.vercel.app/api/auth/discord';
+const API_ORIGIN=window.OPENUTILITY_API_BASE||'https://openutility-bot-backend.vercel.app/api';
+const LOGIN_URL=window.OPENUTILITY_AUTH_URL||API_ORIGIN+'/auth/discord';
 const ASSET='../assets/openutility-bot-logo.jpg';
 const originalApi=window.api;
 function showMessage(message,type='error'){
