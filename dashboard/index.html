@@ -33,11 +33,11 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#1e1f22;col
     try{
       const doc=frame.contentDocument;
       if(!doc||!doc.body)throw new Error('Dashboard document is unavailable.');
-      await inject(doc,'/dashboard-reliability.js?v=20261005-4');
-      await inject(doc,'/discord-theme.js?v=20261005-4');
-      await inject(doc,'/dashboard-hardening.js?v=20261005-4');
+      await inject(doc,'/dashboard-reliability.js?v=20261010-1');
+      await inject(doc,'/discord-theme.js?v=20261010-1');
+      await inject(doc,'/dashboard-hardening.js?v=20261010-1');
       const style=doc.createElement('style');
-      style.textContent='@media(max-width:650px){body{padding-bottom:18px!important}.mobilebar{display:none!important}}';
+      style.textContent='@media(max-width:950px){.layout{grid-template-columns:1fr!important;gap:18px!important}.side{position:static!important;display:flex!important;gap:4px!important;overflow-x:auto!important;max-width:100%!important}.side small{display:none!important}.side button{flex:0 0 auto!important;width:auto!important;white-space:nowrap!important}.side button.active:before{display:none!important}}@media(max-width:650px){html,body{min-width:0!important;width:100%!important;overflow-x:hidden!important}body{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important}.wrap{width:calc(100% - 24px)!important}.layout{display:block!important;padding:14px 0 24px!important}.side{display:none!important}.content{min-width:0!important}.serverbar{max-width:none!important;margin-bottom:18px!important}.content h1{font-size:30px!important;letter-spacing:-1.1px!important}.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}.actions{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}.formgrid,.embedgrid{grid-template-columns:minmax(0,1fr)!important}.panel{padding:16px!important}.savebar{align-items:stretch!important;flex-direction:column!important}.savebar .btn{width:100%!important}.mobilebar{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:999!important;height:calc(68px + env(safe-area-inset-bottom))!important;padding:7px 5px calc(7px + env(safe-area-inset-bottom))!important;background:#0a0e17f5!important;border-top:1px solid #ffffff18!important;backdrop-filter:blur(18px)!important}.mobilebar button{display:block!important;min-width:0!important}.toast{bottom:calc(82px + env(safe-area-inset-bottom))!important}}';
       doc.head.appendChild(style);
       settled=true;
     }catch(e){showError(e&&e.message?e.message:'The dashboard loaded but could not initialize its interface.');}
