@@ -209,3 +209,8 @@ OpenUtility is an open-source Discord ecosystem focused on giving server owners 
 <p align="center">
   Built with care by the OpenUtility community.
 </p>
+
+
+## API endpoint configuration
+
+The dashboard reads its backend base URL from `api-config.js`. The default is the production API URL. To point a deployment at another backend, change `window.OPENUTILITY_API_BASE` in that file; keep the value as the API base ending in `/api`. The backend must set `FRONTEND_URL` to the exact dashboard origin and use HTTPS. Authenticated write requests use session-bound CSRF tokens.
