@@ -241,12 +241,13 @@ async function loadChannels(){
     if(!guild||guild.id!==guildId)return;
     channels=Array.isArray(data.channels)?data.channels:[];
     ["welcomeChannel","welcomeDesignerChannel","messageChannel","memberChannel","moderationChannel","commandChannel","embedChannel"].forEach(id=>{if($(id))$(id).innerHTML=channelOptions($(id).value)});
+    return true;
   }catch(error){
     if(guild?.id!==guildId)return;
     channels=[];
     const message="Could not load this server's channels: "+(error.message||"API request failed");
     ["configStatus","logStatus","welcomeStatus","embedStatus"].forEach(id=>{if($(id))$(id).textContent=message});
-    throw error;
+    return false;
   }
 }
 async function loadAutoMod(){
@@ -274,8 +275,8 @@ async function loadConfig(){
     $("automodEnabled").checked=!!c.automod?.enabled;$("antiSpam").checked=!!c.automod?.antiSpam;$("antiLinks").checked=!!c.automod?.antiLinks;
     $("blockedWords").value=(Array.isArray(c.automod?.blockedWords)?c.automod.blockedWords:[]).join("\n");
     $("modEnabled").checked=c.moderation?.enabled!==false;$("warnings").checked=c.moderation?.warnings!==false;$("timeoutMinutes").value=c.moderation?.timeoutMinutes||10;
-    await loadChannels();if(!guild||guild.id!==guildId)return;$("welcomeChannel").value=c.welcome?.channelId||"";
-    $("configStatus").textContent="Settings loaded from the API";snapshotSection("configuration");
+    const channelsLoaded=await loadChannels();if(!guild||guild.id!==guildId)return;$("welcomeChannel").value=c.welcome?.channelId||"";
+    $("configStatus").textContent=channelsLoaded?"Settings loaded from the API":"Settings loaded; channel options could not be refreshed";snapshotSection("configuration");
   }catch(error){if(guild?.id===guildId){$("configStatus").textContent=error.message||"Could not load settings";toast($("configStatus").textContent)}}
 }
 async function saveConfig(){
@@ -317,10 +318,10 @@ async function loadWelcomeDesigner(){
  try{
   const d=await api("/guilds/"+guildId+"/config");if(!guild||guild.id!==guildId)return;
   if(d.guildId&&d.guildId!==guildId)throw new Error("The API returned settings for a different server.");
-  const w=d.config?.welcome||{};await loadChannels();if(!guild||guild.id!==guildId)return;
+  const w=d.config?.welcome||{};const channelsLoaded=await loadChannels();if(!guild||guild.id!==guildId)return;
   $("welcomeDesignerChannel").innerHTML=channelOptions(w.channelId||"");$("welcomeDesignerChannel").value=w.channelId||"";
   $("welcomeDesignerEnabled").checked=!!w.enabled;$("welcomeDmEnabled").checked=!!w.dmEnabled;$("welcomeDesignerMessage").value=w.message||"Welcome {user} to {server}!";$("welcomeDesignerTitle").value=w.title||"";$("welcomeDesignerColor").value=/^#[0-9a-f]{6}$/i.test(w.color||"")?w.color:"#829CFF";
-  updateWelcomePreview();$("welcomeStatus").textContent="Welcome settings loaded";snapshotSection("welcome");
+  updateWelcomePreview();$("welcomeStatus").textContent=channelsLoaded?"Welcome settings loaded":"Welcome settings loaded; channel options could not be refreshed";snapshotSection("welcome");
  }catch(error){if(guild?.id===guildId){$("welcomeStatus").textContent=error.message||"Could not load welcome settings";toast($("welcomeStatus").textContent)}}
 }
 async function saveWelcomeDesigner(){
@@ -349,10 +350,10 @@ async function loadLogging(){
   try{
     const d=await api("/guilds/"+guildId+"/logging");if(!guild||guild.id!==guildId)return;
     if(d.guildId&&d.guildId!==guildId)throw new Error("The API returned logging settings for a different server.");
-    const l=d.logging||{};await loadChannels();if(!guild||guild.id!==guildId)return;
+    const l=d.logging||{};const channelsLoaded=await loadChannels();if(!guild||guild.id!==guildId)return;
     $("logEnabled").checked=!!l.enabled;$("messageLogs").checked=!!l.messageLogs;$("memberLogs").checked=!!l.memberLogs;$("moderationLogs").checked=!!l.moderationLogs;$("commandLogs").checked=!!l.commandLogs;
     $("messageChannel").value=l.messageChannelId||"";$("memberChannel").value=l.memberChannelId||"";$("moderationChannel").value=l.moderationChannelId||"";$("commandChannel").value=l.commandChannelId||"";
-    $("logStatus").textContent="Logging settings loaded";snapshotSection("logging");
+    $("logStatus").textContent=channelsLoaded?"Logging settings loaded":"Logging loaded; channel options could not be refreshed";snapshotSection("logging");
   }catch(error){if(guild?.id===guildId){$("logStatus").textContent=error.message||"Could not load logging settings";toast($("logStatus").textContent)}}
 }
 async function saveLogging(){
