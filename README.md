@@ -1,18 +1,18 @@
-# OpenUtility Dashboard
+# OpenUtility Website
 
 > **Your Discord. Under control.**
 
 The official web dashboard for **OpenUtility Bot** — a modern control center for Discord server security, moderation, logging, automation, configuration, and utilities.
 
-OpenUtility Dashboard is designed to give server owners a clean, focused interface for managing their OpenUtility-powered servers without relying on a large collection of commands.
+OpenUtility Website is designed to give server owners a clean, focused interface for managing their OpenUtility-powered servers without relying on a large collection of commands.
 
 [![OpenUtility](https://img.shields.io/badge/OpenUtility-Dashboard-5865F2?style=flat-square)](https://openutility.bot.nu/)
 [![Status](https://img.shields.io/badge/status-active-55e6a5?style=flat-square)](https://openutility.bot.nu/status/)
 [![License](https://img.shields.io/badge/license-open%20source-58a6ff?style=flat-square)](https://github.com/OpenUtility2/openutility-dashboard)
 
-## ✨ What is OpenUtility Dashboard?
+## ✨ What is OpenUtility Website?
 
-OpenUtility Dashboard is the web control center that works alongside **OpenUtility Bot**.
+OpenUtility Website is the web control center that works alongside **OpenUtility Bot**.
 
 It brings server management into one interface with dedicated areas for security, moderation, logging, welcome automation, embeds, configuration, documentation, and live status.
 
@@ -45,7 +45,7 @@ It brings server management into one interface with dedicated areas for security
 | --- | --- |
 | [`openutility`](https://github.com/OpenUtility2/openutility) | Main OpenUtility website and platform |
 | [`openutility-bot`](https://github.com/OpenUtility2/openutility-bot) | Main Discord bot |
-| [`openutility-dashboard`](https://github.com/OpenUtility2/openutility-dashboard) | Web dashboard — this repository |
+| [`openutility-dashboard`](https://github.com/OpenUtility2/openutility-dashboard) | Public website — dashboard development is paused |
 | [`openutility-api`](https://github.com/OpenUtility2/openutility-api) | Backend/API for authentication, server data, and configuration |
 | [`mctools`](https://github.com/OpenUtility2/mctools) | Minecraft tools platform |
 | [`speedcheck`](https://github.com/OpenUtility2/speedcheck) | Internet/network speed testing project |
@@ -61,7 +61,7 @@ OpenUtility uses separate components so the dashboard, API, and Discord bot can 
                                     │
                                     ▼
                          ┌──────────────────────┐
-                         │ OpenUtility Dashboard│
+                         │ OpenUtility Website│
                          │      Web UI          │
                          └──────────┬───────────┘
                                     │
@@ -89,7 +89,6 @@ openutility-dashboard/
 ├── assets/                     # Logos and image assets
 ├── about/                      # About page
 ├── changelog/                  # Changelog page
-├── dashboard/                  # Friendly dashboard route
 ├── developer/                  # Developer resources
 ├── docs/                       # Documentation page
 ├── features/                   # Feature overview
@@ -99,13 +98,7 @@ openutility-dashboard/
 ├── status/                     # Status page
 ├── terms/                      # Terms page
 ├── index.html                  # Main landing page
-├── dashboard-core.html         # Main dashboard interface
-├── bot-profile.html            # Bot identity studio
-├── api-config.js               # Backend API URL configuration
 ├── discord-theme.js            # Shared Discord-style interactions
-├── dashboard-hardening.js      # Dashboard safety enhancements
-├── dashboard-polish.js         # UI polish and enhancements
-├── dashboard-reliability.js    # Reliability helpers
 ├── shared-discord-theme.css    # Shared visual theme
 ├── discord-home.css            # Homepage styles
 ├── *.html                      # Backward-compatible route redirects
@@ -119,11 +112,11 @@ openutility-dashboard/
 Use this quick map before editing files:
 
 - **Homepage and landing-page content:** index.html
-- **Main dashboard UI and most dashboard behavior:** dashboard-core.html
-- **Bot profile / identity studio:** bot-profile.html
-- **Backend API address:** api-config.js
+- **Main dashboard UI and most dashboard behavior:** (dashboard files removed; saved backup can be restored later)
+- **Bot profile / identity studio:** (dashboard feature removed temporarily)
+- **Backend API address:** (dashboard API configuration removed temporarily)
 - **Shared Discord-style theme:** shared-discord-theme.css and discord-theme.js
-- **Dashboard reliability, hardening, and polish:** the matching dashboard-*.js files
+- **Dashboard reliability, hardening, and polish:** the matching (dashboard helper scripts removed temporarily) files
 - **Individual information pages:** the matching folder's index.html, such as about/index.html or privacy/index.html
 - **Old page URLs:** root-level files such as about.html and docs.html are compatibility redirects. Keep them unless all old links have been accounted for.
 
@@ -186,7 +179,7 @@ If authentication is enabled, configure the corresponding Discord OAuth2 redirec
 
 ## 🎯 Design Goals
 
-OpenUtility Dashboard is built around a few principles:
+OpenUtility Website is built around a few principles:
 
 - **Simple** — important controls should be easy to find.
 - **Professional** — consistent UI, spacing, typography, and interaction patterns.
@@ -238,6 +231,6 @@ OpenUtility is an open-source Discord ecosystem focused on giving server owners 
 </p>
 
 
-## API endpoint configuration
 
-The dashboard reads its backend base URL from `api-config.js`. The default is the production API URL. To point a deployment at another backend, change `window.OPENUTILITY_API_BASE` in that file; keep the value as the API base ending in `/api`. The backend must set `FRONTEND_URL` to the exact dashboard origin and use HTTPS. Authenticated write requests use session-bound CSRF tokens.
+
+Dashboard development is temporarily paused. Its source files were removed from this repository after a local backup was made, and can be restored when work resumes.
