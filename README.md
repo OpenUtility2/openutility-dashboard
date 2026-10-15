@@ -84,23 +84,50 @@ The dashboard is the presentation layer. Server-side authentication, persistent 
 
 ```text
 openutility-dashboard/
-├── assets/              # Images and dashboard assets
-├── dashboard/           # Dashboard pages/components
-├── developer/           # Developer-focused resources
-├── docs/                # Documentation resources
-├── features/            # Feature resources
-├── live-status/         # Service/status pages
-├── about/               # About pages
-├── changelog/           # Changelog resources
-├── index.html           # Main landing page
-├── dashboard.html       # Dashboard entry point
-├── dashboard-core.html  # Dashboard core UI
-├── dashboard-v4.js      # Dashboard functionality
-├── dashboard-polish.js  # UI/UX enhancements
-├── docs.html             # Documentation entry page
-├── about.html            # About entry page
-└── CNAME                # Custom domain configuration
+├── .github/
+│   └── FUNDING.yml             # Sponsor links
+├── assets/                     # Logos and image assets
+├── about/                      # About page
+├── changelog/                  # Changelog page
+├── dashboard/                  # Friendly dashboard route
+├── developer/                  # Developer resources
+├── docs/                       # Documentation page
+├── features/                   # Feature overview
+├── live-status/                # Live status page
+├── privacy/                    # Privacy policy
+├── showcase/                   # Showcase page
+├── status/                     # Status page
+├── terms/                      # Terms page
+├── index.html                  # Main landing page
+├── dashboard-core.html         # Main dashboard interface
+├── bot-profile.html            # Bot identity studio
+├── api-config.js               # Backend API URL configuration
+├── discord-theme.js            # Shared Discord-style interactions
+├── dashboard-hardening.js      # Dashboard safety enhancements
+├── dashboard-polish.js         # UI polish and enhancements
+├── dashboard-reliability.js    # Reliability helpers
+├── shared-discord-theme.css    # Shared visual theme
+├── discord-home.css            # Homepage styles
+├── *.html                      # Backward-compatible route redirects
+├── .editorconfig               # Consistent editor settings
+├── .prettierrc.json            # Formatting rules
+└── CNAME                       # Custom domain configuration
 ```
+
+## 🧭 Where to make changes
+
+Use this quick map before editing files:
+
+- **Homepage and landing-page content:** index.html
+- **Main dashboard UI and most dashboard behavior:** dashboard-core.html
+- **Bot profile / identity studio:** bot-profile.html
+- **Backend API address:** api-config.js
+- **Shared Discord-style theme:** shared-discord-theme.css and discord-theme.js
+- **Dashboard reliability, hardening, and polish:** the matching dashboard-*.js files
+- **Individual information pages:** the matching folder's index.html, such as about/index.html or privacy/index.html
+- **Old page URLs:** root-level files such as about.html and docs.html are compatibility redirects. Keep them unless all old links have been accounted for.
+
+The project intentionally remains a static website. Keep changes small and readable, use descriptive names, and avoid moving files or changing route paths unless you also update every reference.
 
 ## 🚀 Development
 
