@@ -1,84 +1,276 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090a0c">
-<meta name="description" content="HostCraft Discord Bot Hosting — reliable, developer-first hosting for Discord bots. Deploy, manage and monitor your bots from one place.">
-<meta property="og:title" content="HostCraft Bots — Discord Bot Hosting">
-<meta property="og:description" content="Your bots. Always online. Developer-first Discord bot hosting by HostCraft.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HostCraft Discord bot hosting. Deploy, manage and monitor your bots with developer-first hosting.">
 <title>HostCraft Bots — Discord Bot Hosting</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f28c28'/%3E%3Ctext x='50%25' y='53%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='27' font-weight='900' fill='%23090a0c'%3EHC%3C/text%3E%3C/svg%3E">
 <style>
-:root{color-scheme:dark;--bg:#090a0c;--bg2:#0e1013;--panel:#121519;--panel2:#171b20;--line:#282d33;--text:#f5f5f3;--muted:#a1a6ad;--muted2:#737b85;--orange:#f28c28;--orange2:#ffad55;--orange-soft:#2b1b0e;--green:#62d69b;--radius:18px;--width:1160px}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:92px}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button{font:inherit}.wrap{width:min(var(--width),calc(100% - 48px));margin-inline:auto}.topline{height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent)}.nav-wrap{position:sticky;top:0;z-index:50;background:rgba(9,10,12,.88);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(18px)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:inline-flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.045em;font-size:17px}.brand-mark{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:var(--orange);color:#17100a;font-size:14px;font-weight:950;letter-spacing:-.1em;box-shadow:0 7px 24px #f28c2825}.brand small{display:block;color:#8f959d;font-size:9px;letter-spacing:.19em;font-weight:750;margin-top:1px}.nav-links{display:flex;align-items:center;gap:29px;color:#b7bbc1;font-size:12px;font-weight:650}.nav-links a:hover{color:var(--orange2)}.nav-actions{display:flex;align-items:center;gap:10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:0 17px;border:1px solid transparent;border-radius:10px;font-size:12px;font-weight:800;transition:transform .18s,border-color .18s,background .18s;cursor:pointer}.btn:hover{transform:translateY(-2px)}.btn-primary{background:var(--orange);color:#17100a}.btn-primary:hover{background:var(--orange2)}.btn-ghost{border-color:#353b42;background:#111418;color:#f2f2f0}.btn-ghost:hover{border-color:#9b602e}.menu-btn{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:10px;background:#121519;color:white;font-size:20px}
-.hero{position:relative;overflow:hidden;padding:100px 0 82px}.hero:before{content:"";position:absolute;width:720px;height:620px;right:-250px;top:-250px;background:radial-gradient(circle,#f28c2823,transparent 68%);pointer-events:none}.hero:after{content:"";position:absolute;width:500px;height:500px;left:-330px;bottom:-360px;background:radial-gradient(circle,#f28c2810,transparent 70%);pointer-events:none}.hero-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--orange2);font-size:10px;font-weight:850;letter-spacing:.17em;text-transform:uppercase}.eyebrow:before{content:"";width:24px;height:1px;background:var(--orange)}h1,h2,h3,p{margin-top:0}.hero h1{max-width:620px;margin:21px 0 19px;font-size:clamp(48px,6.2vw,76px);line-height:1.01;letter-spacing:-.075em;font-weight:850}.accent{color:var(--orange)}.hero-copy{max-width:550px;color:#aeb4bc;font-size:16px;line-height:1.85}.hero-buttons{display:flex;gap:11px;flex-wrap:wrap;margin-top:29px}.trust-points{display:flex;flex-wrap:wrap;gap:19px;margin-top:30px;color:#9ca3ab;font-size:10px;font-weight:650}.trust-points span{display:flex;align-items:center;gap:7px}.tick{color:var(--green);font-size:13px}
-.console-card{position:relative;padding:15px;border:1px solid #343a42;border-radius:20px;background:linear-gradient(145deg,#191e24,#0f1216);box-shadow:0 35px 100px #0009;transform:perspective(1200px) rotateY(-4deg) rotateX(2deg)}.console-card:before{content:"";position:absolute;inset:-1px;border-radius:20px;background:linear-gradient(140deg,#f28c2844,transparent 32%,transparent 70%,#ffffff10);pointer-events:none;z-index:-1}.console-head{display:flex;align-items:center;justify-content:space-between;padding:3px 3px 14px;border-bottom:1px solid #2b3037}.console-brand{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:800}.mini-mark{display:grid;place-items:center;width:27px;height:27px;border-radius:8px;background:var(--orange);color:#17100a;font-size:9px;font-weight:950}.status{display:inline-flex;align-items:center;gap:7px;color:var(--green);font-size:9px;font-weight:850;letter-spacing:.06em}.status:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #62d69b}.console-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:14px 0}.stat{padding:12px 13px;border:1px solid #2a3037;border-radius:11px;background:#171c22}.stat label{display:block;color:#929ba5;font-size:9px;margin-bottom:7px}.stat strong{font-size:21px;letter-spacing:-.05em}.stat small{color:#8b949e;font-size:9px;margin-left:4px}.terminal{padding:14px 15px;border:1px solid #272d34;border-radius:11px;background:#090c0f;color:#aab2bc;font:10px/2 ui-monospace,SFMono-Regular,Menlo,monospace}.terminal .good{color:var(--green)}.terminal .orange{color:var(--orange2)}.terminal .dim{color:#68727e}.console-foot{display:flex;justify-content:space-between;gap:10px;padding:12px 3px 1px;color:#8d969f;font-size:9px}.console-foot b{color:#e7e9eb}.preview-note{margin:12px 4px 0;color:#747d87;font-size:9px;text-align:right}
-.proof{border-block:1px solid #242930;background:#0e1115}.proof-row{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:38px;padding:20px 0;color:#a6abb2;font-size:10px;font-weight:750;letter-spacing:.04em}.proof-row span{display:flex;align-items:center;gap:9px}.proof-icon{color:var(--orange);font-size:15px}
-.section{padding:88px 0}.section-head{max-width:680px;margin:0 auto 42px;text-align:center}.section-head .eyebrow{justify-content:center}.section-head h2{margin:15px 0 13px;font-size:clamp(32px,4.5vw,48px);line-height:1.1;letter-spacing:-.06em}.section-head p{color:var(--muted);font-size:13px;line-height:1.8}.features-section{background:#0d1014;border-block:1px solid #22272d}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature{min-height:205px;padding:24px;border:1px solid #292f36;border-radius:15px;background:linear-gradient(145deg,#151a20,#111519);transition:transform .2s,border-color .2s}.feature:hover{transform:translateY(-4px);border-color:#80512c}.feature-icon{width:42px;height:42px;display:grid;place-items:center;margin-bottom:21px;border:1px solid #6e421f55;border-radius:12px;background:var(--orange-soft);color:var(--orange2);font-size:19px}.feature h3{margin-bottom:8px;font-size:15px;letter-spacing:-.025em}.feature p{margin:0;color:#9da5ae;font-size:11px;line-height:1.8}
-.workflow{display:grid;grid-template-columns:.9fr 1.1fr;gap:62px;align-items:center}.workflow-copy h2{margin:15px 0;font-size:clamp(34px,4.4vw,49px);line-height:1.1;letter-spacing:-.06em}.workflow-copy p{color:var(--muted);font-size:13px;line-height:1.85}.steps{display:grid;gap:16px;margin-top:26px}.step{display:flex;align-items:flex-start;gap:13px}.step-num{width:29px;height:29px;flex:none;display:grid;place-items:center;border:1px solid #774923;border-radius:9px;background:#2a1b10;color:var(--orange2);font-size:10px;font-weight:850}.step h3{margin:1px 0 4px;font-size:12px}.step p{margin:0;color:#89929d;font-size:10px;line-height:1.65}.code-card{overflow:hidden;border:1px solid #303740;border-radius:16px;background:#10151a;box-shadow:0 24px 70px #0006}.code-head{display:flex;justify-content:space-between;align-items:center;padding:14px 17px;border-bottom:1px solid #293039;color:#a3abb4;font-size:10px}.window-dots{display:flex;gap:5px}.window-dots i{width:7px;height:7px;border-radius:50%;background:#59616b}.code-body{padding:23px;font:11px/2.15 ui-monospace,SFMono-Regular,Menlo,monospace;color:#c0c7cf}.code-body .comment{color:#707c88}.code-body .key{color:var(--orange2)}.code-body .value{color:#83d9aa}.code-body .line{display:block}
-.runtime-section{background:#0d1014;border-block:1px solid #22272d}.runtime-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.runtime{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 19px;border:1px solid #2a3037;border-radius:12px;background:#13181e}.runtime-name{font-size:12px;font-weight:750}.runtime-desc{display:block;margin-top:3px;color:#858e99;font-size:9px}.planned{flex:none;padding:5px 8px;border:1px solid #5a3b22;border-radius:99px;background:#25190f;color:#e6a66b;font-size:8px;font-weight:850;letter-spacing:.05em}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.plan{padding:24px;border:1px solid #2c3239;border-radius:15px;background:#13181d}.plan.featured{border-color:#9b602e;background:linear-gradient(150deg,#20170f,#14181d 55%);box-shadow:0 0 0 1px #f28c2815}.plan-tag{display:inline-block;margin-bottom:12px;color:var(--orange2);font-size:9px;font-weight:850;letter-spacing:.12em}.plan h3{margin-bottom:7px;font-size:16px}.plan p{min-height:39px;color:#9ba3ad;font-size:11px;line-height:1.7}.plan-size{margin:18px 0 5px;font-size:24px;font-weight:850;letter-spacing:-.05em}.plan-size small{font-size:10px;color:#9ba3ad;font-weight:600;letter-spacing:0}.plan-note{color:#7f8994;font-size:9px}.plan ul{display:grid;gap:10px;padding:17px 0 0;margin:17px 0 0;border-top:1px solid #2a3037;list-style:none;color:#c3c9d0;font-size:10px}.plan li:before{content:"✓";margin-right:8px;color:var(--green);font-weight:900}.plans-note{margin:18px auto 0;max-width:650px;color:#77818d;text-align:center;font-size:10px;line-height:1.7}
-.faq{max-width:820px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}.faq details{padding:17px 18px;border:1px solid #2b3138;border-radius:12px;background:#13181d}.faq summary{position:relative;padding-right:22px;cursor:pointer;list-style:none;font-size:11px;font-weight:800}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"+";position:absolute;right:0;top:-3px;color:var(--orange);font-size:18px}.faq details[open] summary:after{content:"−"}.faq details p{margin:12px 0 0;color:#9ba3ad;font-size:10px;line-height:1.8}
-.cta-section{padding:25px 0 82px}.cta-box{position:relative;overflow:hidden;padding:54px 28px;border:1px solid #704522;border-radius:19px;background:radial-gradient(ellipse at 50% 120%,#f28c2829,transparent 65%),linear-gradient(145deg,#191a1c,#121519);text-align:center}.cta-box:before{content:"HC";position:absolute;right:5%;top:-58px;color:#ffffff06;font-size:230px;font-weight:950;letter-spacing:-.12em;pointer-events:none}.cta-box>*{position:relative}.cta-box h2{margin:13px 0 10px;font-size:clamp(29px,4vw,43px);letter-spacing:-.06em}.cta-box p{max-width:580px;margin:0 auto 23px;color:#a5abb2;font-size:12px;line-height:1.8}.cta-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-footer{border-top:1px solid #262c32;background:#0b0e11;padding:30px 0;color:#858e98;font-size:10px}.footer-row{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer-links{display:flex;gap:19px;flex-wrap:wrap}.footer-links a:hover{color:var(--orange2)}.footer-brand{display:flex;align-items:center;gap:9px;color:#e8e9e9;font-weight:850}.footer-brand .brand-mark{width:30px;height:30px;border-radius:9px;font-size:11px}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:42px}.hero{padding:75px 0 65px}.console-card{max-width:650px;width:100%;margin:auto;transform:none}.workflow{grid-template-columns:1fr;gap:35px}.feature-grid{grid-template-columns:repeat(2,1fr)}.plans{grid-template-columns:1fr 1fr}.plan:last-child{grid-column:1/-1}.proof-row{gap:18px 28px}}
-@media(max-width:640px){.wrap{width:calc(100% - 34px)}.nav{height:66px}.nav-links{display:none;position:absolute;top:66px;left:17px;right:17px;padding:17px;border:1px solid #30363d;border-radius:13px;background:#14191f;flex-direction:column;align-items:stretch;gap:16px}.nav-links.open{display:flex}.nav-actions .btn-ghost{display:none}.nav-actions .btn{min-height:38px;padding:0 12px;font-size:10px}.menu-btn{display:block}.hero{padding:57px 0 49px}.hero h1{font-size:clamp(45px,13vw,61px)}.hero-copy{font-size:14px}.trust-points{gap:12px}.section{padding:61px 0}.section-head{margin-bottom:30px}.feature-grid,.runtime-grid,.plans,.faq{grid-template-columns:1fr}.feature{min-height:unset;padding:21px}.plan:last-child{grid-column:auto}.plan p{min-height:unset}.console-card{padding:11px;border-radius:15px}.console-stats{gap:7px}.stat{padding:10px}.stat strong{font-size:18px}.terminal{font-size:9px;padding:11px}.proof-row{justify-content:flex-start;gap:13px 20px;padding:17px 0}.proof-row span{font-size:9px}.workflow-copy h2{font-size:36px}.code-body{padding:17px;font-size:9px}.cta-section{padding:5px 0 60px}.cta-box{padding:39px 19px}.footer-row{align-items:flex-start;flex-direction:column}.footer-links{gap:14px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+:root {
+  color-scheme: light dark;
+  --site-primary: #f28c28;
+  --site-on-primary: #17110b;
+  --site-secondary: #22252b;
+  --site-on-secondary: #f5f5f5;
+  --site-background: #0b0d11;
+  --site-on-background: #f5f5f6;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --surface: #11151b;
+  --surface-2: #171c23;
+  --muted: #a2a8b2;
+  --border: #292f38;
+  --accent-soft: #2b1d11;
+  --green: #5ed6a0;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+button, a { font: inherit; }
+a { color: inherit; text-decoration: none; }
+#app { min-height: 100vh; width: 100%; border-radius: 0; overflow: hidden; background-color: light-dark(var(--site-background), var(--site-background)); color: light-dark(var(--site-on-background), var(--site-on-background)); }
+.container { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
+.nav-wrap { position: sticky; top: 0; z-index: 20; background: rgba(10,11,13,.94); backdrop-filter: blur(18px); border-bottom: 1px solid #242424; }
+nav { min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 850; letter-spacing: -.04em; font-size: 19px; }
+.brand-mark { width: 24px; height: 24px; border-radius: 4px; display: grid; place-items: center; color: #fff; background: transparent; border: 1px solid #777; font-weight: 950; font-size: 11px; letter-spacing: -.1em; }
+.brand small { color: #8d8d8d; font-size: 8px; letter-spacing: .17em; display: block; margin-top: 1px; }
+.nav-links { display: flex; align-items: center; gap: 24px; color: #a8a8a8; font-size: 9px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.nav-links a:hover, .footer-links a:hover { color: var(--site-primary); }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.btn { border: 1px solid transparent; border-radius: 2px; padding: 10px 15px; font-weight: 750; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; cursor: pointer; transition: transform .18s ease, background .18s ease, border .18s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--site-primary); color: #090909; }
+.btn-primary:hover { background: #ffa344; }
+.btn-outline { border-color: #343434; color: #f4f4f4; background: transparent; }
+.btn-outline:hover { border-color: var(--site-primary); }
+.menu-toggle { display: none; background: none; border: 1px solid var(--border); color: white; border-radius: 9px; padding: 9px 11px; }
+.hero { position: relative; padding: 64px 0 72px; }
+.hero:before { content: ""; position: absolute; width: 650px; height: 520px; border-radius: 50%; right: -150px; top: -150px; background: radial-gradient(circle, rgba(242,140,40,.17), transparent 68%); opacity: var(--site-decoration-opacity); pointer-events: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: 34px; align-items: center; position: relative; }
+.eyebrow { color: var(--site-primary); display: inline-flex; gap: 9px; align-items: center; font-size: 11px; font-weight: 850; letter-spacing: .17em; text-transform: uppercase; }
+.eyebrow:before { content: ""; width: 23px; height: 1px; background: var(--site-primary); }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-family: var(--site-font-heading); font-size: calc(clamp(43px, 5.5vw, 68px) * var(--site-heading-scale)); line-height: 1.04; letter-spacing: -.065em; margin: 22px 0; max-width: 650px; }
+.gradient-text { color: var(--site-primary); }
+.hero-copy { color: #aeb4bd; font-size: 16px; line-height: 1.8; max-width: 540px; }
+.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+.trust-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 35px; color: #9ca3ad; font-size: 11px; font-weight: 650; }
+.trust-row span { display: inline-flex; align-items: center; gap: 7px; }
+.check { color: var(--green); font-weight: 900; }
+.dashboard { background: #111214; border: 1px solid #292929; border-radius: 3px; padding: 17px; box-shadow: none; transform: none; }
+.dash-top { display: flex; justify-content: space-between; align-items: center; padding: 4px 2px 17px; border-bottom: 1px solid #2b323c; }
+.dash-title { font-size: 12px; font-weight: 800; }
+.online { color: var(--green); font-size: 10px; font-weight: 800; display: inline-flex; gap: 6px; align-items: center; }
+.online:before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+.dash-main { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 0; }
+.metric { background: #171d25; border: 1px solid #2a323d; border-radius: 10px; padding: 14px; }
+.metric label { display: block; color: #929ba7; font-size: 10px; margin-bottom: 8px; }
+.metric strong { font-size: 22px; letter-spacing: -.04em; }
+.metric small { color: #8b95a2; font-size: 10px; margin-left: 4px; }
+.console { background: #0a0d11; border: 1px solid #252c35; border-radius: 10px; padding: 14px; font: 10px/1.9 ui-monospace, SFMono-Regular, Menlo, monospace; color: #9ba6b3; }
+.console b { color: var(--green); font-weight: 500; }
+.console .orange { color: #f4a45c; }
+.dash-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 13px; color: #929ba7; font-size: 10px; }
+.dash-foot strong { color: #e6e8eb; }
+.section { padding: calc(82px * var(--site-spacing-scale)) 0; }
+.section-head { text-align: center; max-width: 650px; margin: 0 auto 42px; }
+.section-head h2 { font-size: calc(clamp(30px, 4vw, 43px) * var(--site-heading-scale)); letter-spacing: -.05em; margin: 15px 0 12px; }
+.section-head p { color: var(--muted); line-height: 1.7; font-size: 14px; }
+.features { background: #0d0e10; border-top: 1px solid #242424; border-bottom: 1px solid #242424; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.feature-card { background: #111214; border: 1px solid #292929; border-radius: 2px; padding: 22px; min-height: 190px; transition: border .2s, transform .2s; }
+.feature-card:hover { border-color: #8c592c; transform: translateY(-4px); }
+.feature-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--site-primary); font-size: 19px; margin-bottom: 21px; }
+.feature-card h3 { font-size: 16px; margin-bottom: 9px; letter-spacing: -.02em; }
+.feature-card p { color: var(--muted); font-size: 12px; line-height: 1.75; margin-bottom: 0; }
+.runtime-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 55px; align-items: center; }
+.runtime-copy h2 { font-size: calc(40px * var(--site-heading-scale)); letter-spacing: -.055em; line-height: 1.12; margin: 16px 0; }
+.runtime-copy p { color: var(--muted); line-height: 1.8; font-size: 14px; }
+.runtime-list { display: grid; gap: 12px; margin-top: 24px; }
+.runtime-item { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 0 0 12px; font-size: 13px; }
+.runtime-item span:last-child { color: var(--green); font-size: 11px; font-weight: 750; }
+.code-window { background: #10151c; border: 1px solid #303844; border-radius: 15px; overflow: hidden; }
+.code-head { padding: 14px 17px; border-bottom: 1px solid #2a313b; display: flex; justify-content: space-between; color: #9ca5b1; font-size: 11px; }
+.dots { display: flex; gap: 5px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: #5b626d; }
+.code-body { padding: 23px; font: 12px/2 ui-monospace, SFMono-Regular, Menlo, monospace; color: #b5bec9; }
+.code-body .key { color: #f3a45c; }
+.code-body .str { color: #8bd5aa; }
+.code-body .comment { color: #687585; }
+.pricing { background: #0f1217; border-top: 1px solid #20252d; border-bottom: 1px solid #20252d; }
+.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+.price-card { background: #111214; border: 1px solid #292929; border-radius: 2px; padding: 26px; position: relative; }
+.price-card.popular { border-color: var(--site-primary); box-shadow: 0 0 0 1px rgba(242,140,40,.14); }
+.popular-tag { position: absolute; top: -12px; right: 20px; background: var(--site-primary); color: #1b1209; border-radius: 99px; padding: 6px 11px; font-size: 9px; font-weight: 900; letter-spacing: .08em; }
+.plan-name { font-size: 14px; font-weight: 850; }
+.plan-desc { color: var(--muted); font-size: 11px; min-height: 35px; margin: 8px 0 20px; line-height: 1.6; }
+.price { font-size: 35px; font-weight: 900; letter-spacing: -.06em; }
+.price span { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+.price-note { color: #7f8996; font-size: 10px; margin: 5px 0 20px; }
+.plan-features { display: grid; gap: 12px; padding: 19px 0; margin: 0 0 18px; border-top: 1px solid var(--border); list-style: none; color: #c3c8d0; font-size: 11px; }
+.plan-features li:before { content: "✓"; color: var(--green); margin-right: 9px; font-weight: 900; }
+.price-card .btn { width: 100%; }
+.faq-grid { max-width: 800px; margin: auto; display: grid; gap: 10px; }
+details { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 17px 19px; }
+summary { cursor: pointer; font-size: 13px; font-weight: 750; list-style: none; display: flex; justify-content: space-between; gap: 15px; }
+summary:after { content: "+"; color: var(--site-primary); font-size: 18px; line-height: 13px; }
+details[open] summary:after { content: "−"; }
+details p { color: var(--muted); font-size: 12px; line-height: 1.75; margin: 13px 0 0; }
+.cta { padding: 65px 0; }
+.cta-box { border: 1px solid #654323; border-radius: calc(18px * var(--site-radius-scale)); padding: 48px; text-align: center; background: radial-gradient(ellipse at 50% 120%, rgba(242,140,40,.18), transparent 65%), #15181e; }
+.cta-box h2 { font-size: calc(38px * var(--site-heading-scale)); letter-spacing: -.05em; margin: 12px 0; }
+.cta-box p { color: var(--muted); font-size: 13px; margin-bottom: 23px; }
+footer { border-top: 1px solid #292929; padding: 48px 0 22px; color: #8e8e8e; font-size: 10px; background: #090a0b; }
+.footer-row { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); justify-content: space-between; gap: 28px; align-items: start; }
+.footer-links { display: grid; gap: 12px; }
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: #202832; border: 1px solid #45505e; color: white; padding: 12px 17px; border-radius: 10px; font-size: 12px; z-index: 50; transition: .25s; box-shadow: 0 12px 35px rgba(0,0,0,.35); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (max-width: 850px) { .hero-grid, .runtime-grid { grid-template-columns: 1fr; gap: 42px; } .hero { padding-top: 75px; } .dashboard { transform: none; max-width: 620px; width: 100%; margin: auto; } .feature-grid { grid-template-columns: repeat(2, 1fr); } .price-grid { grid-template-columns: 1fr 1fr; } .price-card:last-child { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .container { width: min(100% - 34px, 500px); } nav { min-height: 58px; } .menu-toggle { display: block; } .nav-links { display: none; position: absolute; left: 17px; right: 17px; top: 58px; padding: 18px; background: #111214; border: 1px solid #292929; border-radius: 2px; flex-direction: column; align-items: stretch; gap: 18px; } .nav-links.open { display: flex; } .nav-actions .btn-outline { display: none; } .nav-actions .btn { padding: 9px 10px; font-size: 10px; } .hero { padding: 40px 0 48px; } h1 { font-size: calc(42px * var(--site-heading-scale)); } .hero-copy { font-size: 13px; } .trust-row { gap: 13px; } .section { padding: 52px 0; } .feature-grid, .price-grid { grid-template-columns: 1fr; } .price-card:last-child { grid-column: auto; } .runtime-copy h2 { font-size: 34px; } .cta-box { padding: 34px 20px; } .cta-box h2 { font-size: 31px; } .footer-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 18px; } .footer-row > span { grid-column: 1 / -1; grid-row: 3; } .dash-main { gap: 7px; } .metric { padding: 11px; } .metric strong { font-size: 19px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *:before, *:after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+/* HostCraft v2 visual language: shared infrastructure-site shell */
+:root { --site-primary:#ff7900; --site-on-primary:#090909; --site-background:#090909; --site-on-background:#f2f2f2; --surface:#111111; --surface-2:#171717; --muted:#858585; --border:#252525; --accent-soft:#211307; --green:#56d6a0; }
+body,#app { background:#090909; color:#f2f2f2; }
+.container { width:min(1240px,calc(100% - 48px)); }
+.nav-wrap { background:rgba(8,8,8,.96); border-bottom:1px solid #1d1d1d; }
+nav { min-height:66px; }
+.brand { gap:8px; font-size:13px; letter-spacing:.04em; }
+.brand-mark { width:auto;height:auto;border:0;border-radius:0;font-size:12px;font-weight:950;letter-spacing:-.12em;color:#f5f5f5; }
+.brand small { font-size:7px;letter-spacing:.2em;color:#8b8b8b; }
+.nav-links { gap:25px; font-size:9px; letter-spacing:.12em; }
+.nav-actions .btn-outline { display:none; }
+.btn { border-radius:1px; text-transform:none; letter-spacing:.01em; }
+.btn-primary { background:#ff7900;color:#090909; }
+.btn-primary:hover { background:#ff9638; }
+.btn-outline { border-color:#373737; }
+.hero { padding:38px 0 54px; }
+.hero:before { display:none; }
+.hero-grid { display:block; }
+.hero-grid > div:first-child { position:relative; padding:48px 48px 40px; background:#121212; border:1px solid #202020; overflow:hidden; }
+.hero-grid > div:first-child:after { content:"";position:absolute;right:-3%;bottom:-44%;width:52%;height:80%;background:repeating-linear-gradient(0deg,transparent 0 19px,rgba(255,121,0,.12) 20px 21px),repeating-linear-gradient(90deg,transparent 0 38px,rgba(255,121,0,.1) 39px 40px);transform:skewY(-17deg);mask-image:linear-gradient(90deg,transparent,#000 45%);pointer-events:none; }
+.eyebrow { font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.13em;color:#ff7900; }
+.eyebrow:before { width:5px;height:5px; }
+h1 { max-width:620px;font-size:clamp(36px,5vw,56px);line-height:1.02;letter-spacing:-.055em;margin:17px 0; }
+.gradient-text { color:#ff7900; }
+.hero-copy { max-width:550px;color:#999;font-size:13px;line-height:1.75; }
+.hero-buttons { margin-top:22px; }
+.trust-row { gap:25px;margin-top:25px;font-size:10px;color:#888; }
+.dashboard { margin-top:14px;background:#0c0c0c;border:1px solid #252525;border-radius:1px;padding:18px; }
+.dash-top { border-color:#292929; }
+.dash-title,.dash-foot { font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.06em; }
+.metric { background:#121212;border:1px solid #242424;border-radius:1px; }
+.metric label { font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;font-size:8px; }
+.console { background:#080808;border:1px solid #242424;border-radius:1px; }
+.section { padding:66px 0; }
+.section-head { text-align:left;margin:0 0 27px;max-width:720px; }
+.section-head h2 { font-size:clamp(25px,3.2vw,36px);letter-spacing:-.045em;margin:10px 0; }
+.section-head p { font-size:12px;color:#888;max-width:600px; }
+.features,.pricing { background:#0b0b0b;border-top:1px solid #1d1d1d;border-bottom:1px solid #1d1d1d; }
+.feature-grid { gap:0;border:1px solid #252525;grid-template-columns:repeat(4,1fr); }
+.feature-card { min-height:174px;background:#101010;border:0;border-right:1px solid #252525;border-bottom:1px solid #252525;border-radius:0;padding:18px; }
+.feature-card:hover { background:#17120d;border-color:#4b2a0d;transform:none; }
+.feature-icon { width:auto;height:auto;background:none;border-radius:0;display:block;color:#ff7900;font:16px ui-monospace,monospace;margin-bottom:17px; }
+.feature-card h3 { font-size:13px; }
+.feature-card p { font-size:10px;color:#898989; }
+.runtime-grid { grid-template-columns:1fr 1fr;gap:45px; }
+.runtime-copy h2 { font-size:clamp(29px,3.5vw,40px); }
+.runtime-copy p { font-size:12px;color:#888; }
+.runtime-item { border-color:#282828;font-size:11px; }
+.code-window { background:#101010;border:1px solid #292929;border-radius:1px; }
+.code-head { font:9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;border-color:#292929; }
+.code-body { font-size:10px; }
+.price-grid { gap:0;border:1px solid #292929; }
+.price-card { background:#101010;border:0;border-right:1px solid #292929;border-radius:0;padding:23px; }
+.price-card.popular { border:0;border-right:1px solid #292929;box-shadow:inset 0 2px #ff7900; }
+.popular-tag { top:0;right:0;border-radius:0;background:#ff7900;color:#111;padding:6px 9px; }
+details { background:#101010;border:1px solid #262626;border-radius:1px;padding:17px; }
+.cta { padding:55px 0; }
+.cta-box { text-align:left;border:1px solid #292929;border-radius:1px;padding:35px;background:#121212; }
+.cta-box h2 { font-size:clamp(26px,3vw,34px); }
+.cta-box p { color:#898989; }
+footer { background:#080808;border-top:1px solid #242424;padding:44px 0 20px; }
+.footer-row { grid-template-columns:1.5fr repeat(5,1fr);gap:20px; }
+.footer-links { gap:11px;font-size:9px; }
+.footer-links strong { font:9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase; }
+.footer-row > span { grid-column:1/-1;border-top:1px solid #202020;padding-top:17px;margin-top:12px;color:#666; }
+@media(max-width:850px){.feature-grid{grid-template-columns:repeat(2,1fr)}.footer-row{grid-template-columns:repeat(3,1fr)}.runtime-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.container{width:calc(100% - 28px)}nav{min-height:58px}.nav-links{top:58px}.hero{padding:22px 0 38px}.hero-grid>div:first-child{padding:29px 22px 26px}.hero-grid>div:first-child:after{width:70%;opacity:.55}h1{font-size:37px}.hero-copy{font-size:12px}.trust-row{gap:12px;font-size:9px}.section{padding:48px 0}.section-head{margin-bottom:22px}.feature-grid{grid-template-columns:repeat(2,1fr)}.feature-card{padding:14px;min-height:165px}.runtime-grid{grid-template-columns:1fr;gap:28px}.price-grid{grid-template-columns:1fr}.price-card{border-right:0;border-bottom:1px solid #292929}.price-card.popular{border-right:0}.cta-box{padding:25px 20px}.footer-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 15px}.footer-row>div:first-child{grid-column:1/-1}.footer-row>span{grid-column:1/-1;grid-row:auto}}
 </style>
 </head>
 <body>
-<div class="topline"></div>
-<header class="nav-wrap"><div class="wrap nav">
-<a class="brand" href="#home" aria-label="HostCraft Bot Hosting home"><span class="brand-mark">HC</span><span>HOSTCRAFT<small>BOT HOSTING</small></span></a>
-<nav class="nav-links" id="navLinks" aria-label="Main navigation"><a href="#features">Features</a><a href="#workflow">How it works</a><a href="#runtimes">Runtimes</a><a href="#plans">Plans</a><a href="#faq">FAQ</a></nav>
-<div class="nav-actions"><a class="btn btn-ghost" href="#features">Explore platform</a><a class="btn btn-primary" href="#launch">Get started <span>↗</span></a><button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button></div>
-</div></header>
-<main id="home">
-<section class="hero"><div class="wrap hero-grid">
-<div><div class="eyebrow">Discord bot hosting, reimagined</div><h1>Your bots.<br><span class="accent">Always online.</span></h1><p class="hero-copy">A better home for your Discord bots. Deploy your code, manage your runtime and keep an eye on performance with developer-first hosting from HostCraft.</p><div class="hero-buttons"><a class="btn btn-primary" href="#plans">Explore hosting plans <span>→</span></a><a class="btn btn-ghost" href="#workflow">See how it works</a></div><div class="trust-points"><span><b class="tick">✓</b> Built for developers</span><span><b class="tick">✓</b> Simple bot management</span><span><b class="tick">✓</b> Helpful support</span></div></div>
-<div><div class="console-card" aria-label="Illustrative HostCraft bot control panel preview"><div class="console-head"><div class="console-brand"><span class="mini-mark">HC</span> HOSTCRAFT <span style="color:#737d87;font-weight:500">/ BOT INSTANCE</span></div><span class="status">PREVIEW</span></div><div class="console-stats"><div class="stat"><label>CPU USAGE</label><strong>18%</strong><small>sample</small></div><div class="stat"><label>MEMORY</label><strong>384</strong><small>MB / 1 GB</small></div><div class="stat"><label>UPTIME</label><strong>--</strong><small>preview</small></div><div class="stat"><label>RUNTIME</label><strong>Node.js</strong><small>example</small></div></div><div class="terminal"><div><span class="good">●</span> <span class="dim">[system]</span> Instance environment initialized</div><div><span class="orange">INFO</span> &nbsp; Starting bot process...</div><div><span class="orange">INFO</span> &nbsp; Connecting to Discord Gateway</div><div><span class="good">●</span> <span class="dim">[preview]</span> Console output illustration</div></div><div class="console-foot"><span>Instance <b>my-discord-bot</b></span><span>Control panel preview ↗</span></div></div><p class="preview-note">Illustrative interface preview · not a live customer instance</p></div>
-</div></section>
-<div class="proof"><div class="wrap proof-row"><span><b class="proof-icon">⌘</b> DEVELOPER-FIRST WORKFLOW</span><span><b class="proof-icon">◈</b> RESOURCE VISIBILITY</span><span><b class="proof-icon">↻</b> PROCESS MANAGEMENT</span><span><b class="proof-icon">⌁</b> MULTI-RUNTIME DIRECTION</span></div></div>
-<section class="section features-section" id="features"><div class="wrap"><div class="section-head"><div class="eyebrow">Everything in one place</div><h2>More than a server to run your bot.</h2><p>Spend less time wrestling with infrastructure. A streamlined hosting experience should give you the tools to deploy, configure and maintain your bots with confidence.</p></div><div class="feature-grid">
-<article class="feature"><div class="feature-icon">⌘</div><h3>Simple deployment</h3><p>Get your bot online with clear runtime settings, startup commands and a straightforward deployment workflow.</p></article>
-<article class="feature"><div class="feature-icon">⌁</div><h3>Live console</h3><p>View process output, inspect errors and understand what your bot is doing without juggling SSH windows.</p></article>
-<article class="feature"><div class="feature-icon">⇄</div><h3>GitHub workflow</h3><p>Bring your repository into your deployment workflow and make updates easier to manage.</p></article>
-<article class="feature"><div class="feature-icon">◈</div><h3>Resource insights</h3><p>Keep CPU, memory and storage usage visible so you can make informed decisions as your bot grows.</p></article>
-<article class="feature"><div class="feature-icon">↻</div><h3>Automatic recovery</h3><p>Configure restart behavior to help your bot recover when its process exits unexpectedly.</p></article>
-<article class="feature"><div class="feature-icon">◇</div><h3>Safer configuration</h3><p>Manage bot tokens and environment variables separately from your source code. Keep secrets private.</p></article>
-</div></div></section>
-<section class="section" id="workflow"><div class="wrap workflow"><div class="workflow-copy"><div class="eyebrow">From code to online</div><h2>Your workflow.<br><span class="accent">Without the friction.</span></h2><p>Whether you are building a community utility bot or running a busy multi-purpose application, your hosting should stay out of the way and let you focus on the code.</p><div class="steps"><div class="step"><span class="step-num">01</span><div><h3>Choose your runtime</h3><p>Pick the language and runtime that match your bot project.</p></div></div><div class="step"><span class="step-num">02</span><div><h3>Configure your application</h3><p>Set the startup command and add environment variables securely.</p></div></div><div class="step"><span class="step-num">03</span><div><h3>Deploy and manage</h3><p>Launch your process and use your hosting controls to monitor it.</p></div></div></div></div>
-<div class="code-card"><div class="code-head"><span>EXAMPLE CONFIGURATION</span><span class="window-dots"><i></i><i></i><i></i></span></div><div class="code-body"><span class="line comment"># Select your application runtime</span><span class="line"><span class="key">runtime</span>: <span class="value">nodejs</span></span><br><span class="line comment"># Define how your bot starts</span><span class="line"><span class="key">startup</span>: <span class="value">npm start</span></span><br><span class="line comment"># Keep credentials in environment settings</span><span class="line"><span class="key">DISCORD_TOKEN</span>: <span class="value">••••••••••••••••</span></span><br><span class="line comment"># Deploy your project</span><span class="line"><span class="key">deployment</span>: <span class="value">ready when configured</span></span></div></div>
-</div></section>
-<section class="section runtime-section" id="runtimes"><div class="wrap"><div class="section-head"><div class="eyebrow">Bring your own stack</div><h2>Made for the tools you build with.</h2><p>Runtime availability will be confirmed as the HostCraft bot hosting service moves toward launch.</p></div><div class="runtime-grid">
-<div class="runtime"><div><div class="runtime-name">Node.js</div><span class="runtime-desc">Discord.js · Eris · Oceanic</span></div><span class="planned">PLANNED</span></div>
-<div class="runtime"><div><div class="runtime-name">Python</div><span class="runtime-desc">discord.py · Pycord · nextcord</span></div><span class="planned">PLANNED</span></div>
-<div class="runtime"><div><div class="runtime-name">Java</div><span class="runtime-desc">JDA · Discord4J</span></div><span class="planned">PLANNED</span></div>
-<div class="runtime"><div><div class="runtime-name">Bun &amp; more</div><span class="runtime-desc">Additional runtimes as the platform grows</span></div><span class="planned">ROADMAP</span></div>
-</div></div></section>
-<section class="section" id="plans"><div class="wrap"><div class="section-head"><div class="eyebrow">Flexible hosting</div><h2>The right resources for every bot.</h2><p>Start with what your project needs and scale as your community grows. Final package specifications and pricing will be announced before launch.</p></div><div class="plans">
-<article class="plan"><span class="plan-tag">01 / STARTER</span><h3>Starter</h3><p>For personal bots, small communities and development projects.</p><div class="plan-size">Essential <small>resources</small></div><div class="plan-note">A simple place to begin</div><ul><li>Bot process hosting</li><li>Console access</li><li>Basic resource visibility</li><li>Standard support options</li></ul></article>
-<article class="plan featured"><span class="plan-tag">02 / GROWING PROJECTS</span><h3>Pro</h3><p>For active bots, growing servers and production workloads.</p><div class="plan-size">More <small>room to grow</small></div><div class="plan-note">More capacity for busy bots</div><ul><li>Higher resource allocations</li><li>Deployment workflow</li><li>Process management tools</li><li>Enhanced support options</li></ul></article>
-<article class="plan"><span class="plan-tag">03 / CUSTOM</span><h3>Advanced</h3><p>For larger projects with specific performance requirements.</p><div class="plan-size">Custom <small>resources</small></div><div class="plan-note">Built around your requirements</div><ul><li>Configurable resource options</li><li>Advanced monitoring direction</li><li>Backup options</li><li>Tailored support options</li></ul></article>
-</div><p class="plans-note">These are proposed package tiers, not currently orderable plans. Exact limits, features and prices will be published once the service is ready.</p></div></section>
-<section class="section features-section" id="faq"><div class="wrap"><div class="section-head"><div class="eyebrow">Questions, answered</div><h2>Before you bring your bot over.</h2><p>A few details about the HostCraft Discord bot hosting project.</p></div><div class="faq">
-<details><summary>What is Discord bot hosting?</summary><p>It provides an always-on server environment for your Discord bot, so it can respond to events and commands without depending on your personal computer.</p></details>
-<details><summary>Which languages will be supported?</summary><p>Node.js and Python are planned starting points. Java and additional runtimes are on the roadmap. Final availability will be confirmed before launch.</p></details>
-<details><summary>Will I be able to deploy from GitHub?</summary><p>A Git-based deployment workflow is part of the proposed platform experience. Repository connection and automation details will be confirmed as development progresses.</p></details>
-<details><summary>Can I manage my bot token?</summary><p>The planned control experience includes environment configuration. Never put your Discord bot token in public source code or commit it to a repository.</p></details>
-<details><summary>Are plans available to purchase now?</summary><p>This website introduces the service direction. Ordering, package specifications and pricing will be enabled after the hosting platform is ready.</p></details>
-<details><summary>Where can I get help?</summary><p>Use the HostCraft support or sales channel you normally contact for hosting enquiries. Official service links will be added here when they are ready.</p></details>
-</div></div></section>
-<section class="cta-section" id="launch"><div class="wrap"><div class="cta-box"><div class="eyebrow">A better home for your bots</div><h2>Build something great.<br><span class="accent">We'll handle the hosting.</span></h2><p>HostCraft Bot Hosting is being prepared for launch. Follow HostCraft announcements for availability, final plans and early access information.</p><div class="cta-actions"><a class="btn btn-primary" href="#plans">Explore proposed plans <span>→</span></a><a class="btn btn-ghost" href="#faq">Read the FAQ</a></div></div></div></section>
-</main>
-<footer><div class="wrap footer-row"><a class="footer-brand" href="#home"><span class="brand-mark">HC</span><span>HOSTCRAFT · BOT HOSTING</span></a><span>© <span id="year">2026</span> HostCraft. All rights reserved.</span><div class="footer-links"><a href="#features">Features</a><a href="#plans">Plans</a><a href="#faq">FAQ</a><a href="#home">Back to top ↑</a></div></div></footer>
+<div id="app">
+  <div class="nav-wrap"><div class="container"><nav>
+    <a class="brand" href="https://hostcraft.xyz/" aria-label="HostCraft home"><span class="brand-mark">H</span><span>HOSTCRAFT<small>INFRASTRUCTURE NETWORK</small></span></a>
+    <div class="nav-links" id="navLinks"><a href="https://hostcraft.xyz/">Home</a><a href="#features">Services</a><a href="#pricing">Pricing</a><a href="#runtimes">Infrastructure</a><a href="#faq">Support</a></div>
+    <div class="nav-actions"><a class="btn btn-primary" href="#pricing">Command Center <span>↗</span></a><button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button></div>
+  </nav></div></div>
+  <main id="home">
+    <section class="hero"><div class="container hero-grid">
+      <div><div class="eyebrow">Discord bot hosting, reimagined</div><h1>Your bots.<br><span class="gradient-text">Always online.</span></h1><p class="hero-copy">Deploy, manage and monitor your Discord bots with hosting built for developers. Spend less time managing servers and more time building something great.</p>
+        <div class="hero-buttons"><a class="btn btn-primary" href="#pricing">Explore hosting plans <span>→</span></a><a class="btn btn-outline" href="#features">Discover the platform</a></div>
+        <div class="trust-row"><span><b class="check">✓</b> Developer-first tools</span><span><b class="check">✓</b> Simple deployment</span><span><b class="check">✓</b> Helpful support</span></div>
+      </div>
+      <div class="dashboard" aria-label="Illustrative bot hosting dashboard preview"><div class="dash-top"><div class="dash-title">⌘ &nbsp; BOT OVERVIEW / PRODUCTION</div><span class="online">OPERATIONAL</span></div>
+        <div class="dash-main"><div class="metric"><label>CPU USAGE</label><strong>18%</strong><small>of 100%</small></div><div class="metric"><label>MEMORY</label><strong>384</strong><small>MB / 1 GB</small></div><div class="metric"><label>UPTIME</label><strong>99.9%</strong><small>illustrative</small></div><div class="metric"><label>RUNTIME</label><strong>Node 24</strong><small>Discord.js</small></div></div>
+        <div class="console"><div><b>●</b> Bot process started successfully</div><div><span class="orange">INFO</span> &nbsp; Connected to Discord Gateway</div><div><span class="orange">INFO</span> &nbsp; Ready as CraftHelper#2048</div><div><b>●</b> Listening for interactions...</div></div>
+        <div class="dash-foot"><span>Last deployment <strong>just now</strong></span><span>View console ↗</span></div>
+      </div>
+    </div></section>
+    <section class="section features" id="features"><div class="container"><div class="section-head"><div class="eyebrow">Everything in one place</div><h2>More than just a place to run your bot.</h2><p>Powerful essentials, without the complicated setup. Get the tools you need to keep your community online and your projects moving.</p></div>
+      <div class="feature-grid">
+        <article class="feature-card"><div class="feature-icon">⌘</div><h3>Easy deployment</h3><p>Get your bot running with a straightforward setup flow and clear startup configuration.</p></article>
+        <article class="feature-card"><div class="feature-icon">⌁</div><h3>Live console</h3><p>View runtime output, investigate errors and manage your process from one place.</p></article>
+        <article class="feature-card"><div class="feature-icon">⇄</div><h3>Git-based workflow</h3><p>Connect your development workflow and make updating your bot easier.</p></article>
+        <article class="feature-card"><div class="feature-icon">◈</div><h3>Resource insights</h3><p>Keep an eye on CPU, memory and storage with clear usage information.</p></article>
+        <article class="feature-card"><div class="feature-icon">⟲</div><h3>Automatic recovery</h3><p>Configure your bot to restart after an unexpected process exit.</p></article>
+        <article class="feature-card"><div class="feature-icon">♢</div><h3>Safer configuration</h3><p>Keep tokens and environment settings out of your source code and manage them securely.</p></article>
+      </div>
+    </div></section>
+    <section class="section" id="runtimes"><div class="container runtime-grid"><div class="runtime-copy"><div class="eyebrow">Built around your stack</div><h2>Your language.<br><span class="gradient-text">Your workflow.</span></h2><p>Start with the tools you already use. HostCraft Bot Hosting is designed to support popular Discord bot ecosystems, with runtime choices that can grow alongside your project.</p><div class="runtime-list"><div class="runtime-item"><span>Node.js · Discord.js · Eris</span><span>PLANNED SUPPORT</span></div><div class="runtime-item"><span>Python · discord.py · Pycord</span><span>PLANNED SUPPORT</span></div><div class="runtime-item"><span>Java · JDA · Discord4J</span><span>PLANNED SUPPORT</span></div><div class="runtime-item"><span>Bun and additional runtimes</span><span>ROADMAP</span></div></div></div>
+      <div class="code-window"><div class="code-head"><span>QUICK START / DEPLOYMENT</span><span class="dots"><i></i><i></i><i></i></span></div><div class="code-body"><div class="comment"># 01 — Choose your runtime</div><div><span class="key">runtime</span>: <span class="str">"nodejs-24"</span></div><br><div class="comment"># 02 — Set your startup command</div><div><span class="key">startup</span>: <span class="str">"npm start"</span></div><br><div class="comment"># 03 — Configure secrets securely</div><div><span class="key">DISCORD_TOKEN</span>: <span class="str">••••••••••••••••</span></div><br><div class="comment"># 04 — Deploy and monitor your bot</div><div><span class="key">status</span>: <span class="str">"ready to launch"</span></div></div></div>
+    </div></section>
+    <section class="section pricing" id="pricing"><div class="container"><div class="section-head"><div class="eyebrow">Straightforward plans</div><h2>Room for every bot to grow.</h2><p>Choose a starting point for your project. These are example package structures; final resources and prices can be configured before launch.</p></div>
+      <div class="price-grid">
+        <article class="price-card"><div class="plan-name">Starter</div><p class="plan-desc">For small personal bots and experiments.</p><div class="price">512 MB <span>RAM</span></div><div class="price-note">Example resource allocation</div><ul class="plan-features"><li>Shared CPU allocation</li><li>5 GB NVMe storage</li><li>Live console access</li><li>Basic usage monitoring</li><li>Community support</li></ul><a class="btn btn-outline plan-cta" href="#get-started" data-plan="Starter">Choose Starter</a></article>
+        <article class="price-card popular"><span class="popular-tag">POPULAR CHOICE</span><div class="plan-name">Pro</div><p class="plan-desc">For growing communities and active bots.</p><div class="price">2 GB <span>RAM</span></div><div class="price-note">Example resource allocation</div><ul class="plan-features"><li>Higher CPU allocation</li><li>20 GB NVMe storage</li><li>Live console and monitoring</li><li>Automated restart options</li><li>Priority support option</li></ul><a class="btn btn-primary plan-cta" href="#get-started" data-plan="Pro">Choose Pro</a></article>
+        <article class="price-card"><div class="plan-name">Advanced</div><p class="plan-desc">For resource-intensive bots and projects.</p><div class="price">4 GB <span>RAM</span></div><div class="price-note">Example resource allocation</div><ul class="plan-features"><li>Dedicated resource allocation options</li><li>30 GB NVMe storage</li><li>Advanced monitoring</li><li>Backup options</li><li>Priority support option</li></ul><a class="btn btn-outline plan-cta" href="#get-started" data-plan="Advanced">Choose Advanced</a></article>
+      </div>
+    </div></section>
+    <section class="section" id="faq"><div class="container"><div class="section-head"><div class="eyebrow">Questions, answered</div><h2>Good to know before you launch.</h2><p>A few basics about the HostCraft bot hosting experience.</p></div><div class="faq-grid">
+      <details><summary>What is Discord bot hosting?</summary><p>It gives your bot a server environment to run continuously, so it can respond to events and commands without relying on your personal computer.</p></details>
+      <details><summary>Which programming languages will be supported?</summary><p>The planned launch focus is Node.js and Python, with Java and additional runtimes considered for future support. Final availability will be confirmed when the service launches.</p></details>
+      <details><summary>Can I deploy my bot from GitHub?</summary><p>Git-based deployment is part of the proposed feature set. The exact repository connection and automatic deployment workflow will be confirmed before launch.</p></details>
+      <details><summary>Will I be able to manage environment variables?</summary><p>The planned management experience includes secure configuration for bot tokens and other environment variables. Never commit your Discord bot token to a public repository.</p></details>
+      <details><summary>Is the service available now?</summary><p>This is an early website concept. Plans, infrastructure, runtime availability and ordering will need to be connected and verified before accepting customers.</p></details>
+    </div></div></section>
+    <section class="cta" id="get-started"><div class="container"><div class="cta-box"><div class="eyebrow">Make your next deployment count</div><h2>Ready to bring your bot online?</h2><p>Build with confidence. Host with HostCraft.</p><button class="btn btn-primary" id="launchBtn">Get launch updates <span>→</span></button></div></div></section>
+  </main>
+  <footer><div class="container footer-row"><div><a class="brand" href="https://hostcraft.xyz/"><span class="brand-mark">H</span><span>HOSTCRAFT<small>INFRASTRUCTURE NETWORK</small></span></a><p style="max-width:220px;line-height:1.8;margin-top:17px;color:#777">Premium cloud infrastructure built for developers and businesses. Now extending to Discord bot hosting.</p><p style="color:#54c99a;font-weight:700">● All Systems Operational</p></div><div class="footer-links"><strong style="color:#eee">Explore</strong><a href="https://hostcraft.xyz/">Get Started</a><a href="https://hostcraft.xyz/">Clients</a><a href="https://hostcraft.xyz/">Updates</a><a href="https://hostcraft.xyz/">Products</a></div><div class="footer-links"><strong style="color:#eee">Services</strong><a href="https://hostcraft.xyz/">Services</a><a href="https://hostcraft.xyz/">Pricing</a><a href="#pricing">Bot Hosting</a></div><div class="footer-links"><strong style="color:#eee">Support</strong><a href="https://hostcraft.xyz/">Help Center</a><a href="#faq">FAQ</a><a href="https://hostcraft.xyz/">Resources</a></div><div class="footer-links"><strong style="color:#eee">Enterprise</strong><a href="https://hostcraft.xyz/">Solutions</a><a href="https://hostcraft.xyz/">Security</a><a href="https://hostcraft.xyz/">Infrastructure</a></div><div class="footer-links"><strong style="color:#eee">Company</strong><a href="https://hostcraft.xyz/">About</a><a href="https://hostcraft.xyz/">Terms</a><a href="https://hostcraft.xyz/">Privacy</a></div><span>© 2026 HostCraft. · v2.0 · Discord Bot Hosting</span></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite">Thanks! Launch updates will be available soon.</div>
+</div>
 <script>
-const menuBtn=document.getElementById('menuBtn');
-const navLinks=document.getElementById('navLinks');
-menuBtn.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.textContent=open?'×':'☰'});
-navLinks.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{navLinks.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.textContent='☰'}));
-document.getElementById('year').textContent=new Date().getFullYear();
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+const toast = document.getElementById('toast');
+let toastTimer;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+document.querySelectorAll('.plan-cta').forEach(button => button.addEventListener('click', event => {
+  event.preventDefault();
+  showToast(button.dataset.plan + ' selected — ordering will be enabled at launch.');
+}));
+document.getElementById('launchBtn').addEventListener('click', () => showToast('Thanks for your interest! Launch updates are coming soon.'));
 </script>
 </body>
 </html>
