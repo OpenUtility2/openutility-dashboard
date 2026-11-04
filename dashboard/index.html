@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="Manage your HostCraft Discord bot hosting services.">
+<title>Customer Dashboard — HostCraft</title>
+<style>
+:root{--bg:#090909;--panel:#111;--panel2:#151515;--line:#292929;--muted:#929292;--text:#f4f4f4;--orange:#ff7900;--green:#56d6a0;--red:#ff6969}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}button{font:inherit}.layout{min-height:100vh;display:grid;grid-template-columns:230px 1fr}.sidebar{background:#0d0d0d;border-right:1px solid #252525;padding:24px 16px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:10px;padding:0 9px 28px;font-size:13px;font-weight:900;letter-spacing:.08em}.mark{width:29px;height:29px;border:1px solid #555;display:grid;place-items:center;letter-spacing:-.1em}.brand small{display:block;color:#777;font-size:7px;letter-spacing:.2em;margin-top:3px}.nav-label{font:9px ui-monospace,monospace;color:#666;letter-spacing:.14em;padding:13px 10px 9px}.nav a{display:flex;align-items:center;gap:11px;padding:11px 12px;color:#999;font-size:11px;margin:2px 0;border:1px solid transparent}.nav a.active,.nav a:hover{background:#1a120b;border-color:#392515;color:#fff}.nav a.active .ico{color:var(--orange)}.ico{width:17px;text-align:center;color:#777;font-size:14px}.side-bottom{margin-top:auto}.help{border:1px solid #2b2b2b;background:#121212;padding:14px;margin:14px 2px}.help b{font-size:11px}.help p{font-size:9px;color:#888;line-height:1.6}.help a{color:var(--orange);font-size:10px}
+main{min-width:0}.topbar{height:68px;border-bottom:1px solid #242424;display:flex;align-items:center;justify-content:space-between;padding:0 34px;gap:15px}.crumb{font-size:11px;color:#888}.crumb b{color:#eee}.top-actions{display:flex;align-items:center;gap:12px}.status{font:9px ui-monospace,monospace;color:#ffb36e;border:1px solid #49311b;padding:7px 9px}.avatar{width:30px;height:30px;background:#242424;border:1px solid #444;display:grid;place-items:center;font-size:10px;font-weight:800}.content{max-width:1300px;margin:auto;padding:35px 34px 60px}.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:26px}.eyebrow{font:9px ui-monospace,monospace;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.welcome h1{font-size:29px;letter-spacing:-.05em;margin:9px 0 5px}.welcome p{font-size:11px;color:#888;margin:0}.btn{border:1px solid #3a3a3a;background:transparent;color:#eee;padding:11px 15px;font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn.primary{background:var(--orange);border-color:var(--orange);color:#111}.btn:hover{border-color:var(--orange)}.btn.primary:hover{background:#ff9638}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}.stat{background:#111;border:1px solid #292929;padding:17px}.stat-head{display:flex;justify-content:space-between;color:#888;font-size:9px}.stat-icon{color:var(--orange)}.stat strong{display:block;font-size:25px;letter-spacing:-.05em;margin:13px 0 4px}.stat small{font-size:9px;color:#777}.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 13px}.section-title h2{font-size:14px;margin:0}.section-title span{font:9px ui-monospace,monospace;color:#777}.server-list{border:1px solid #292929;background:#101010}.server{display:grid;grid-template-columns:minmax(180px,1.4fr) repeat(3,minmax(90px,.7fr)) auto;align-items:center;gap:15px;padding:17px 18px;border-bottom:1px solid #292929}.server:last-child{border:0}.server-name{display:flex;align-items:center;gap:12px}.server-icon{width:35px;height:35px;border:1px solid #3a2b1e;background:#1c140d;color:var(--orange);display:grid;place-items:center;font-size:14px}.server-name b{display:block;font-size:11px}.server-name small{display:block;font-size:9px;color:#777;margin-top:5px}.data-label{font-size:8px;color:#777;margin-bottom:6px}.data-value{font-size:10px;color:#ddd}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #31533f;background:#102017;color:#7be0aa;padding:5px 7px;font:8px ui-monospace,monospace}.pill:before{content:"";width:5px;height:5px;background:currentColor;border-radius:50%}.pill.demo{border-color:#57401f;background:#1d160d;color:#ffbd77}.server-action{font-size:9px;color:var(--orange);white-space:nowrap}.lower{display:grid;grid-template-columns:1.2fr .8fr;gap:13px;margin-top:15px}.panel{border:1px solid #292929;background:#101010;padding:18px}.panel h3{font-size:12px;margin:0 0 14px}.activity{display:grid;gap:14px}.activity-row{display:flex;gap:10px;align-items:flex-start}.activity-dot{width:7px;height:7px;background:var(--orange);margin-top:4px;border-radius:50%;flex:none}.activity-row b{font-size:10px;font-weight:650}.activity-row small{display:block;color:#777;font-size:9px;margin-top:4px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px}.quick a{border:1px solid #303030;padding:12px;font-size:9px;color:#ccc}.quick a:hover{border-color:var(--orange)}.quick span{display:block;font-size:16px;color:var(--orange);margin-bottom:8px}.notice{margin-top:20px;padding:13px 15px;border:1px solid #49311b;background:#17110b;color:#b9a99a;font-size:9px;line-height:1.7}.notice b{color:#ffb36e}.mobile-brand,.mobile-menu{display:none}
+@media(max-width:950px){.layout{grid-template-columns:190px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.server{grid-template-columns:1.3fr 1fr 1fr auto}.server .hide-mid{display:none}}
+@media(max-width:680px){.layout{display:block}.sidebar{display:none}.topbar{height:58px;padding:0 16px}.mobile-brand{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:900}.mobile-brand .mark{width:25px;height:25px}.crumb{display:none}.content{padding:25px 15px 40px}.welcome{align-items:flex-start;flex-direction:column}.welcome h1{font-size:25px}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:22px}.server{grid-template-columns:1fr auto;gap:12px}.server .hide-mid{display:block}.server .data-block{display:none}.lower{grid-template-columns:1fr}.status{font-size:8px}.top-actions{gap:8px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<a class="brand" href="../"><span class="mark">HC</span><span>HOSTCRAFT<small>CUSTOMER AREA</small></span></a>
+<div class="nav-label">WORKSPACE</div>
+<nav class="nav">
+<a class="active" href="./"><span class="ico">▦</span>Overview</a>
+<a href="#servers"><span class="ico">▣</span>My Servers</a>
+<a href="#billing"><span class="ico">◇</span>Billing</a>
+<a href="#activity"><span class="ico">◷</span>Activity</a>
+</nav>
+<div class="nav-label">SUPPORT</div>
+<nav class="nav"><a href="https://hostcraft.xyz/" target="_blank" rel="noopener"><span class="ico">↗</span>HostCraft Website</a><a href="https://discord.com/" target="_blank" rel="noopener"><span class="ico">◉</span>Community Support</a></nav>
+<div class="side-bottom"><div class="help"><b>Need a hand?</b><p>Our team can help with setup, deployment and server questions.</p><a href="https://hostcraft.xyz/">Contact HostCraft ↗</a></div></div>
+</aside>
+<main>
+<header class="topbar"><div class="mobile-brand"><span class="mark">HC</span> HOSTCRAFT</div><div class="crumb">Customer Area <span> / </span> <b>Overview</b></div><div class="top-actions"><span class="status">PREVIEW MODE</span><div class="avatar">HC</div></div></header>
+<div class="content">
+<section class="welcome"><div><div class="eyebrow">HOSTCRAFT CUSTOMER AREA</div><h1>Welcome to your dashboard.</h1><p>Manage your bot hosting services, check resources and access your control panel.</p></div><a class="btn primary" href="../#plans">＋ &nbsp;Order a server</a></section>
+<section class="stats">
+<div class="stat"><div class="stat-head"><span>Total servers</span><span class="stat-icon">▣</span></div><strong>02</strong><small>Example dashboard data</small></div>
+<div class="stat"><div class="stat-head"><span>Running</span><span class="stat-icon">◉</span></div><strong>02</strong><small>Example dashboard data</small></div>
+<div class="stat"><div class="stat-head"><span>Memory allocated</span><span class="stat-icon">▤</span></div><strong>2.5 GB</strong><small>Across example services</small></div>
+<div class="stat"><div class="stat-head"><span>Account status</span><span class="stat-icon">◇</span></div><strong style="font-size:18px">Preview</strong><small>Sign-in integration pending</small></div>
+</section>
+<div class="section-title" id="servers"><h2>Your bot servers</h2><span>DEMO SERVICES · NOT LIVE</span></div>
+<section class="server-list">
+<div class="server"><div class="server-name"><div class="server-icon">⌘</div><div><b>Community Bot</b><small>Node.js 24 · Starter plan</small></div></div><div class="data-block"><div class="data-label">MEMORY</div><div class="data-value">512 MB</div></div><div class="data-block hide-mid"><div class="data-label">STORAGE</div><div class="data-value">5 GB NVMe</div></div><div><span class="pill demo">DEMO</span></div><a class="server-action" href="https://panel.hostcraft.xyz/">Control panel ↗</a></div>
+<div class="server"><div class="server-name"><div class="server-icon">⌘</div><div><b>Utility Bot</b><small>Python 3.12 · Pro plan</small></div></div><div class="data-block"><div class="data-label">MEMORY</div><div class="data-value">2 GB</div></div><div class="data-block hide-mid"><div class="data-label">STORAGE</div><div class="data-value">20 GB NVMe</div></div><div><span class="pill demo">DEMO</span></div><a class="server-action" href="https://panel.hostcraft.xyz/">Control panel ↗</a></div>
+</section>
+<div class="lower">
+<section class="panel" id="activity"><h3>Recent activity</h3><div class="activity"><div class="activity-row"><span class="activity-dot"></span><div><b>Dashboard preview loaded</b><small>Example activity · No account connected</small></div></div><div class="activity-row"><span class="activity-dot"></span><div><b>Server management integration</b><small>Pending Pterodactyl API connection</small></div></div><div class="activity-row"><span class="activity-dot"></span><div><b>Discord sign-in</b><small>OAuth setup required</small></div></div></div></section>
+<section class="panel" id="billing"><h3>Quick access</h3><div class="quick"><a href="../#plans"><span>＋</span>Order hosting</a><a href="https://panel.hostcraft.xyz/"><span>↗</span>Server panel</a><a href="https://hostcraft.xyz/"><span>⌂</span>Main website</a><a href="https://discord.com/"><span>◉</span>Get support</a></div></section>
+</div>
+<div class="notice"><b>Dashboard preview:</b> This page is a front-end prototype. The displayed servers and usage figures are sample data, not real customer services. Discord authentication, customer records, billing and live Pterodactyl server data must be connected before this dashboard becomes operational.</div>
+</div>
+</main>
+</div>
+</body>
+</html>
